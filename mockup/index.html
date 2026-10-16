@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HindujaOneJourney Mockup</title>
+<style>
+:root{
+  --brand:#7a1f2b;--brand-ink:#5a1520;--brand-soft:#f9ecee;
+  --blue:#23408e;--blue-soft:#eaf0fc;
+  --green:#17633f;--green-soft:#e4f3ea;
+  --amber:#7d5300;--amber-soft:#fcf1d8;
+  --ink:#1c1d24;--muted:#5b5e6e;--line:#e1e2ea;--bg:#f3f3f6;--card:#fff;
+  --radius:12px;--shadow:0 1px 2px rgba(20,20,40,.06),0 4px 14px rgba(20,20,40,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.25}
+a{color:var(--blue)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Mockup chrome */
+.topbar{position:sticky;top:0;z-index:20;background:#16161d;color:#fff;display:flex;align-items:center;gap:12px;padding:8px 16px;flex-wrap:wrap}
+.topbar .name{font-weight:700;letter-spacing:.2px}
+.topbar .pill{font-size:12px;background:#f2c14e;color:#3a2a00;border-radius:999px;padding:2px 8px;font-weight:600}
+.modes{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.modes button{background:transparent;border:1px solid #3a3a48;color:#d8d8e4;border-radius:8px;padding:6px 12px;cursor:pointer}
+.modes button[aria-pressed="true"]{background:#fff;color:#16161d;border-color:#fff;font-weight:600}
+
+/* Portal */
+.portal-head{background:#fff;border-bottom:1px solid var(--line)}
+.portal-head .in{max-width:1040px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+.logo{font-weight:800;color:var(--brand);font-size:20px;letter-spacing:-.3px}
+.logo small{display:block;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:600}
+.portal-head nav{margin-left:auto;display:flex;gap:18px;font-weight:600;font-size:14px}
+.portal-head nav span{cursor:default}
+.page{max-width:1040px;margin:0 auto;padding:24px 16px 64px}
+.block{margin-bottom:20px}
+
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--blue-soft);color:var(--blue)}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px}
+.tag.brand{background:var(--brand);color:#fff}.tag.blue{background:var(--blue-soft);color:var(--blue)}.tag.muted{background:#ececf2;color:var(--muted)}
+.badge{font-size:11px;font-weight:700;border-radius:5px;padding:1px 6px;background:var(--green-soft);color:var(--green);white-space:nowrap}
+.badge.amber{background:var(--amber-soft);color:var(--amber)}
+.step-head{display:flex;flex-direction:column;gap:6px}
+.step-head .row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.step-head h1{font-size:26px}
+.step-head p{margin:0;color:var(--muted)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+.banner{background:var(--green-soft);color:var(--green);border-radius:10px;padding:10px 14px;font-weight:500}
+.note{color:var(--muted);font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.grid2,.grid4{grid-template-columns:1fr}.step-head h1{font-size:22px}.portal-head nav{display:none}}
+
+.btn{border:0;border-radius:10px;padding:11px 20px;font-weight:700;cursor:pointer;background:var(--brand);color:#fff}
+.btn:hover{background:var(--brand-ink)}
+.btn.secondary{background:var(--blue)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:6px 12px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.cta-row{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.linkbtn{background:none;border:0;color:var(--blue);font-weight:600;cursor:pointer;padding:0}
+
+/* Form */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer;font-weight:600;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.field{display:flex;flex-direction:column;gap:5px}
+.field .lbl{display:flex;justify-content:space-between;gap:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.field input[type=text],.field input[type=number],.field select,.input{border:1px solid #cfd1dc;border-radius:8px;padding:9px 11px;background:#fff;width:100%}
+.field.pre input,.field.pre select{background:#f2faf5;border-color:#a9d6bb}
+.field .help{font-size:12px;color:var(--muted)}
+.field .err{font-size:12px;color:#b3261e;font-weight:600}
+.affix{display:flex;align-items:center;gap:6px}
+.affix span{color:var(--muted);font-size:14px}
+.switch{display:flex;align-items:center;gap:10px;cursor:pointer;padding:6px 0}
+.switch input{width:40px;height:22px;appearance:none;background:#c9cbd6;border-radius:999px;position:relative;cursor:pointer;margin:0;flex:none}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.switch input:checked{background:var(--green)}
+.switch input:checked::after{left:21px}
+
+/* Recommendation cards */
+.rec{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:#fff}
+.rec.sel{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset}
+.rec .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rec h3{font-size:18px}
+.rec .why{font-size:13px;color:var(--muted)}
+.rec .acts{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+
+.modal-bg{position:fixed;inset:0;background:rgba(15,15,25,.45);display:flex;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:50;overflow:auto}
+.modal{background:#fff;border-radius:16px;max-width:820px;width:100%;padding:22px}
+.detail{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+@media (max-width:760px){.detail{grid-template-columns:1fr}}
+.comp-row{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.comp-row.inc{background:var(--brand-soft);border-color:#ecc9cf}
+@media (max-width:760px){.comp-row{grid-template-columns:1fr 1fr}}
+.whybox{background:var(--blue-soft);border-radius:12px;padding:14px}
+.whybox ul{margin:8px 0 0;padding-left:18px}
+
+/* Customise / review */
+.cust{display:grid;grid-template-columns:1.7fr 1fr;gap:16px}
+@media (max-width:760px){.cust{grid-template-columns:1fr}}
+.lines{width:100%;border-collapse:collapse;font-size:14px}
+.lines td{padding:6px 0;border-bottom:1px dashed var(--line)}
+.lines td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.lines tr.total td{border-bottom:0;font-weight:800;font-size:16px;padding-top:10px}
+.rv-row{display:grid;grid-template-columns:100px 120px 1fr 110px 150px;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line)}
+.rv-row:last-child{border-bottom:0}
+.rv-row>span:last-child{justify-content:flex-end}
+.rv-row .amt{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;min-width:90px}
+@media (max-width:760px){.rv-row{grid-template-columns:1fr 1fr}}
+.muted{color:var(--muted)}
+.members{display:flex;gap:8px;flex-wrap:wrap}
+.members label{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.members label.on{background:var(--brand-soft);border-color:#ecc9cf}
+.checks label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.checks input{margin-top:3px}
+
+/* Hero */
+.hero{background:var(--brand);color:#fff;border-radius:18px;padding:32px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+.hero .eyebrow{font-size:12px;letter-spacing:1.5px;font-weight:700;opacity:.8}
+.hero h1{font-size:34px;margin:8px 0}
+.hero .how{background:#fff;color:var(--ink);border-radius:14px;padding:18px}
+.hero .how ol{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.hero .how li{display:flex;gap:10px;align-items:flex-start}
+.hero .how li b{display:inline-flex;width:24px;height:24px;border-radius:6px;background:var(--brand);color:#fff;align-items:center;justify-content:center;font-size:13px;flex:none}
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding:22px}.hero h1{font-size:26px}}
+
+.wallet-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid #c9cbd6;border-top-color:var(--brand);border-radius:50%;animation:sp 0.8s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.mockflag{font-size:11px;color:var(--amber);background:var(--amber-soft);border-radius:5px;padding:1px 6px;font-weight:700}
+
+/* Builder */
+.bld{max-width:1320px;margin:0 auto;padding:18px 16px 60px}
+.bld-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.bld-head h1{font-size:22px;margin-right:auto}
+.bld-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+.bld-tabs button{border:0;background:none;padding:10px 14px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent}
+.bld-tabs button[aria-selected="true"]{color:var(--brand);border-bottom-color:var(--brand)}
+.cols{display:grid;grid-template-columns:220px 1fr 340px;gap:16px;align-items:start}
+.cols.two{grid-template-columns:1fr 380px}
+@media (max-width:1000px){.cols,.cols.two{grid-template-columns:1fr}}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.panel h3{font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px}
+.palette-item{border:1px dashed #b9bccb;border-radius:8px;padding:8px 10px;margin-bottom:6px;background:#fafafd;cursor:grab;font-size:14px;font-weight:600}
+.dnd-list{min-height:46px;border-radius:10px;padding:4px}
+.dnd-list.over{background:var(--blue-soft)}
+.item{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-bottom:6px;background:#fff;cursor:grab}
+.item.selected{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-soft)}
+.item.dropbefore{box-shadow:0 -3px 0 var(--blue)}
+.item.off{opacity:.5}
+.item .grip{color:#9a9cab;cursor:grab;user-select:none}
+.item .grow{flex:1;min-width:0}
+.item .sub{font-size:12px;color:var(--muted)}
+.iconbtn{border:1px solid var(--line);background:#fff;border-radius:6px;width:26px;height:26px;cursor:pointer;line-height:1;padding:0;flex:none}
+.iconbtn:hover{background:#f3f3f8}
+.form-grid{display:grid;gap:10px}
+.form-grid label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+.form-grid input,.form-grid select,.form-grid textarea{border:1px solid #cfd1dc;border-radius:7px;padding:7px 9px;background:#fff;font-weight:400;color:var(--ink)}
+.form-grid .inline{flex-direction:row;align-items:center;gap:8px}
+.sectionbox{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:12px;background:#fbfbfd}
+.sectionbox .sh{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.sectionbox .sh input{font-weight:700;border:1px solid transparent;background:transparent;padding:4px 6px;border-radius:6px;flex:1}
+.sectionbox .sh input:hover,.sectionbox .sh input:focus{border-color:#cfd1dc;background:#fff}
+.rule{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px;margin-bottom:10px}
+.rule.match{border-color:#a9d6bb}
+.cond{display:grid;grid-template-columns:1.4fr 70px 1fr 28px;gap:6px;margin-bottom:6px}
+.cond select,.cond input{border:1px solid #cfd1dc;border-radius:7px;padding:6px 8px;background:#fff;min-width:0}
+.warn{background:var(--amber-soft);color:var(--amber);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:600;margin-bottom:8px}
+.preview{border:1px solid var(--line);border-radius:12px;background:var(--bg);overflow:hidden}
+.preview .scale{pointer-events:none;transform:scale(.62);transform-origin:top left;width:161%;padding:16px}
+.prodtable{width:100%;border-collapse:collapse;font-size:13px}
+.prodtable th{text-align:left;color:var(--muted);font-weight:600;padding:6px;border-bottom:1px solid var(--line)}
+.prodtable td{padding:4px;border-bottom:1px solid var(--line);vertical-align:middle}
+.prodtable input,.prodtable select{border:1px solid #cfd1dc;border-radius:6px;padding:5px 6px;width:100%;min-width:60px;background:#fff}
+textarea.json{width:100%;min-height:520px;font:12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid #cfd1dc;border-radius:10px;padding:12px}
+.scroll-x{overflow-x:auto}
+
+/* Integration console */
+.ic{max-width:1320px;margin:0 auto;padding:18px 16px 60px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:1000px){.ic{grid-template-columns:1fr}}
+.adapter{border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px;margin-bottom:12px}
+.adapter .hdr{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.adapter code,.log code{font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.method{font:700 11px ui-monospace,Menlo,monospace;background:#16161d;color:#fff;border-radius:5px;padding:2px 6px}
+pre{background:#16161d;color:#e7e7ef;border-radius:10px;padding:12px;overflow:auto;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:6px 0 0;max-height:360px}
+details.log{border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:8px;padding:8px 12px}
+details.log summary{cursor:pointer;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ok{color:var(--green);font-weight:700}.bad{color:#b3261e;font-weight:700}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+/* ==========================================================================
+   HindujaOneJourney — clickable mockup
+   - Every screen is rendered from ONE journey config (DEFAULT_CONFIG below).
+     The Workflow builder edits that config; production serves it from the
+     Spring Boot backend (GET /api/v1/journey-config) instead of localStorage.
+   - Every external system is behind an adapter in `Adapters`. Each mock
+     adapter documents the backend contract IT implements; swapping a mock
+     for a real call does not touch any screen.
+   - All rates, policy numbers and sample people here are MOCK data.
+   ========================================================================== */
+
+const STORE_KEY = 'hoj.mockup.config.v1';
+const clone = o => JSON.parse(JSON.stringify(o));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const uid = p => p + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+const inr = n => '₹ ' + Math.round(n).toLocaleString('en-IN');
+
+/* ---------------------------------------------------------------- Config */
+const DEFAULT_CONFIG = {
+  version: 1,
+  brand: { name: 'IndusInd', tagline: 'GENERAL INSURANCE' },
+  showUnmatched: true,
+  tags: {
+    Recommended: { tone: 'brand', preselect: true },
+    Relevant: { tone: 'blue', preselect: true },
+    Optional: { tone: 'muted', preselect: false }
+  },
+  steps: [
+    { id: 'intro', type: 'intro', enabled: true, counted: false, title: 'Guided protection journey', subtitle: 'Profile first • Personalised recommendation • Customisation • Checkout',
+      blocks: [ { id: 'b_hero', type: 'hero' }, { id: 'b_cta0', type: 'cta', label: 'Start my protection profile', action: 'next' } ] },
+    { id: 'profile', type: 'profile', enabled: true, counted: true, title: 'My Protection Profile', subtitle: 'Tell us about your family and assets',
+      blocks: [ { id: 'b_h1', type: 'stepHeader' }, { id: 'b_bn1', type: 'banner', text: 'Confirm the pre-filled details and add anything missing. Employer-sourced fields can be edited.' },
+                { id: 'b_pf', type: 'profileForm' }, { id: 'b_cta1', type: 'cta', label: 'Show my recommendations', action: 'next' } ] },
+    { id: 'recommend', type: 'recommend', enabled: true, counted: true, title: 'Recommended for your profile', subtitle: 'Recommendations use your confirmed profile. Every card explains why and remains editable.',
+      blocks: [ { id: 'b_h2', type: 'stepHeader' }, { id: 'b_rc', type: 'recommendationCards' },
+                { id: 'b_n2', type: 'note', text: 'Recommendation does not remove your choice — select or deselect any product.' },
+                { id: 'b_cta2', type: 'cta', label: 'Customise selected plans', action: 'next' } ] },
+    { id: 'customise', type: 'customise', enabled: true, counted: true, title: 'Customise suggested plans', subtitle: 'The recommendation is pre-filled. Change limits, members, add-ons or remove a product.',
+      blocks: [ { id: 'b_h3', type: 'stepHeader' }, { id: 'b_cp', type: 'customisePanel' },
+                { id: 'b_n3', type: 'note', text: 'Changes recalculate through approved product and rating systems.' },
+                { id: 'b_cta3', type: 'cta', label: 'Review selected plans', action: 'next' } ] },
+    { id: 'review', type: 'review', enabled: true, counted: true, title: 'Review & Checkout', subtitle: 'Buy one product or several. No recommendation is forced.',
+      blocks: [ { id: 'b_h4', type: 'stepHeader' }, { id: 'b_rv', type: 'reviewList' }, { id: 'b_ps', type: 'paymentSummary' },
+                { id: 'b_cta4', type: 'cta', label: 'Proceed to KYC', action: 'next' } ] },
+    { id: 'checkout', type: 'checkout', enabled: true, counted: false, chip: 'Final step', title: 'Secure Checkout', subtitle: 'Confirm your details and consents.',
+      blocks: [ { id: 'b_h5', type: 'stepHeader' }, { id: 'b_kyc', type: 'kycForm' },
+                { id: 'b_cs', type: 'consents', items: [ 'I confirm the proposal details', 'I consent to product-specific declarations and communication', 'I understand that each policy is independently issued' ] },
+                { id: 'b_ps2', type: 'paymentSummary' }, { id: 'b_cta5', type: 'cta', label: 'Pay securely', action: 'pay' } ] },
+    { id: 'done', type: 'done', enabled: true, counted: false, chip: 'Complete', title: 'Payment successful', subtitle: 'Selected policies and documents are available in one place.',
+      blocks: [ { id: 'b_h6', type: 'stepHeader' }, { id: 'b_w', type: 'wallet' }, { id: 'b_nba', type: 'nextBestAction' } ] }
+  ],
+  sections: [
+    { id: 'family', title: 'Family', fields: ['emp_name', 'emp_age', 'has_spouse', 'spouse_age', 'children_count', 'child_ages', 'has_parents', 'parent_ages', 'gmc_sum', 'gmc_members', 'personal_cover', 'pincode'] },
+    { id: 'assets', title: 'Assets', fields: ['own_2w', 'reg_2w', 'own_4w', 'reg_4w', 'intl_travel', 'trips_per_year', 'own_home', 'property_pincode'] }
+  ],
+  fields: {
+    emp_name: { label: 'Employee name', type: 'text', prefill: 'employee.name', required: true },
+    emp_age: { label: 'Your age', type: 'number', suffix: 'years', prefill: 'employee.age', required: true },
+    has_spouse: { label: 'Spouse', type: 'toggle', prefill: 'spouse.covered' },
+    spouse_age: { label: 'Spouse age', type: 'number', suffix: 'years', prefill: 'spouse.age', showIf: { field: 'has_spouse', op: '==', value: true } },
+    children_count: { label: 'Number of children', type: 'number', prefill: 'children.count' },
+    child_ages: { label: 'Children ages', type: 'text', prefill: 'children.ages', help: 'Comma separated, e.g. 8, 5', showIf: { field: 'children_count', op: '>', value: 0 } },
+    has_parents: { label: 'Parents', type: 'toggle', prefill: 'parents.covered' },
+    parent_ages: { label: 'Parent ages', type: 'text', help: 'Comma separated', showIf: { field: 'has_parents', op: '==', value: true } },
+    gmc_sum: { label: 'Corporate GMC cover', type: 'number', prefix: '₹', suffix: 'lakh', prefill: 'gmc.sumInsuredLakh' },
+    gmc_members: { label: 'GMC members', type: 'text', prefill: 'gmc.members' },
+    personal_cover: { label: 'Personal health cover', type: 'select', options: ['None declared', 'Yes, I have one'], prefill: 'personalHealth.status' },
+    pincode: { label: 'Residential pincode', type: 'text', prefill: 'address.pincode', required: true },
+    own_2w: { label: 'Own a 2-Wheeler', type: 'toggle', prefill: 'vehicles.twoWheeler.owned' },
+    reg_2w: { label: '2-Wheeler registration number', type: 'text', prefill: 'vehicles.twoWheeler.reg', showIf: { field: 'own_2w', op: '==', value: true } },
+    own_4w: { label: 'Own a 4-Wheeler', type: 'toggle', prefill: 'vehicles.fourWheeler.owned' },
+    reg_4w: { label: '4-Wheeler registration number', type: 'text', prefill: 'vehicles.fourWheeler.reg', showIf: { field: 'own_4w', op: '==', value: true } },
+    intl_travel: { label: 'International travel', type: 'toggle', prefill: 'travel.international' },
+    trips_per_year: { label: 'Typical trips per year', type: 'number', prefill: 'travel.tripsPerYear', showIf: { field: 'intl_travel', op: '==', value: true } },
+    own_home: { label: 'Own a home', type: 'toggle', prefill: 'home.owned' },
+    property_pincode: { label: 'Property pincode', type: 'text', prefill: 'home.pincode', showIf: { field: 'own_home', op: '==', value: true } }
+  },
+  catalogue: [
+    { id: 'health', code: 'HEALTH', name: 'Health', enabled: true, gstPct: 0, usesMembers: true,
+      components: [
+        { id: 'retail', code: 'HLT-RETAIL', name: 'Retail Health', optional: false, included: true, rate: 'health_base',
+          si: { label: 'Sum insured', unit: 'lakh', options: [5, 10, 15, 20, 25], default: 10 }, opt: { label: 'Plan option', options: ['Recommended plan', 'Essential', 'Premier'], default: 'Recommended plan' } },
+        { id: 'topup', code: 'HLT-TOPUP', name: 'Super Top-up', optional: true, included: true, rate: 'health_topup',
+          si: { label: 'Sum insured', unit: 'lakh', options: [25, 50, 100], default: 25 }, opt: { label: 'Deductible', options: ['₹5 lakh', '₹10 lakh'], default: '₹5 lakh' } },
+        { id: 'pa', code: 'PA', name: 'Personal Accident', optional: true, included: true, rate: 'pa', scope: 'Employee only',
+          si: { label: 'Cover', unit: 'lakh', options: [10, 25, 50], default: 25 } },
+        { id: 'hospicash', code: 'HOSPICASH', name: 'HospiCash', optional: true, included: false, rate: 'hospicash',
+          si: { label: 'Daily benefit', unit: '₹/day', options: [500, 1000, 2000], default: 1000 } }
+      ] },
+    { id: 'travel', code: 'TRAVEL', name: 'Travel', enabled: true, gstPct: 18,
+      components: [
+        { id: 'trip', code: 'TRV-OVERSEAS', name: 'Overseas travel', optional: false, included: true, rate: 'travel',
+          si: { label: 'Cover tier', unit: '', options: ['Standard', 'Plus', 'Max'], default: 'Standard' }, opt: { label: 'Trip type', options: ['Single trip', 'Annual multi-trip'], default: 'Single trip' } }
+      ] },
+    { id: 'motor', code: 'MOTOR', name: 'Motor', enabled: true, gstPct: 18,
+      components: [
+        { id: 'tw', code: 'MTR-2W', name: '2-Wheeler', optional: true, included: true, rate: 'motor_2w', showIf: { field: 'own_2w', op: '==', value: true },
+          opt: { label: 'Plan', options: ['Comprehensive', 'Third-party only'], default: 'Comprehensive' } },
+        { id: 'fw', code: 'MTR-4W', name: '4-Wheeler', optional: true, included: true, rate: 'motor_4w', showIf: { field: 'own_4w', op: '==', value: true },
+          opt: { label: 'Plan', options: ['Comprehensive', 'Third-party only'], default: 'Comprehensive' } }
+      ] },
+    { id: 'home', code: 'HOME', name: 'Home', enabled: true, gstPct: 18,
+      components: [
+        { id: 'building', code: 'HOM-BLDG', name: 'Building', optional: true, included: true, rate: 'home_building', si: { label: 'Sum insured', unit: 'lakh', options: [25, 50, 75, 100], default: 50 } },
+        { id: 'contents', code: 'HOM-CNT', name: 'Contents', optional: true, included: true, rate: 'home_contents', si: { label: 'Sum insured', unit: 'lakh', options: [5, 10, 20], default: 10 } }
+      ] }
+  ],
+  rules: [
+    { id: 'r_health', name: 'Health gap vs corporate GMC', enabled: true, match: 'all', when: [ { field: 'gmc_sum', op: '<', value: 10 } ],
+      product: 'health', tag: 'Recommended', headline: 'Current GMC ₹{gmc_sum}L; family of {family_count}',
+      reasons: [ 'Corporate GMC: ₹{gmc_sum} lakh', 'Family members: {family_count}', 'Personal health cover: {personal_cover}' ] },
+    { id: 'r_travel', name: 'International traveller', enabled: true, match: 'all', when: [ { field: 'intl_travel', op: '==', value: true } ],
+      product: 'travel', tag: 'Relevant', headline: 'International travel selected', reasons: [ 'About {trips_per_year} international trips a year', 'Travellers: {family_count}' ] },
+    { id: 'r_motor', name: 'Vehicle owner', enabled: true, match: 'any', when: [ { field: 'own_2w', op: '==', value: true }, { field: 'own_4w', op: '==', value: true } ],
+      product: 'motor', tag: 'Relevant', headline: '{vehicle_count} vehicle(s) added', reasons: [ 'Vehicles on your profile: {vehicle_count}' ] },
+    { id: 'r_home', name: 'Home owner', enabled: true, match: 'all', when: [ { field: 'own_home', op: '==', value: true } ],
+      product: 'home', tag: 'Optional', headline: 'Owned home added', reasons: [ 'Property pincode: {property_pincode}' ] }
+  ]
+};
+
+/* Block types available in the layout builder. `steps` = step types where the block makes sense. */
+const BLOCKS = {
+  hero: { label: 'Hero / how it works', props: [] },
+  stepHeader: { label: 'Step header', props: [] },
+  heading: { label: 'Heading', props: ['text'], defaults: { text: 'New heading' } },
+  paragraph: { label: 'Paragraph', props: ['text'], defaults: { text: 'Some explanatory text.' } },
+  banner: { label: 'Info banner', props: ['text'], defaults: { text: 'Helpful message for the customer.' } },
+  note: { label: 'Small note', props: ['text'], defaults: { text: 'Small print.' } },
+  profileForm: { label: 'Profile form', props: [], steps: ['profile'] },
+  recommendationCards: { label: 'Recommendation cards', props: [] },
+  customisePanel: { label: 'Customise panel', props: [] },
+  reviewList: { label: 'Review list', props: [] },
+  paymentSummary: { label: 'Payment summary', props: [] },
+  kycForm: { label: 'KYC details', props: [] },
+  consents: { label: 'Consent checkboxes', props: ['items'], defaults: { items: ['I agree to the terms'] } },
+  wallet: { label: 'Policy wallet', props: [] },
+  nextBestAction: { label: 'Next-best action', props: [] },
+  cta: { label: 'Button', props: ['label', 'action'], defaults: { label: 'Continue', action: 'next' } }
+};
+const STEP_TYPES = ['intro', 'profile', 'recommend', 'customise', 'review', 'checkout', 'done'];
+const CORE_STEPS = ['profile', 'recommend', 'review', 'checkout', 'done'];
+const PREFILL_KEYS = ['employee.name', 'employee.age', 'spouse.covered', 'spouse.age', 'children.count', 'children.ages', 'parents.covered', 'gmc.sumInsuredLakh', 'gmc.members',
+  'personalHealth.status', 'address.pincode', 'vehicles.twoWheeler.owned', 'vehicles.twoWheeler.reg', 'vehicles.fourWheeler.owned', 'vehicles.fourWheeler.reg',
+  'travel.international', 'travel.tripsPerYear', 'home.owned', 'home.pincode', 'kyc.pan', 'kyc.mobile', 'kyc.email', 'kyc.address'];
+const OPS = ['==', '!=', '<', '<=', '>', '>='];
+
+/* --------------------------------------------------------------- Adapters
+   Each adapter = one backend port IT implements in Spring Boot.
+   `contract` is shown in the Integration console. */
+const MOCK_PROFILE = {
+  'employee.name': 'Chandra Shekar', 'employee.age': 37, 'spouse.covered': true, 'spouse.age': 35, 'children.count': 1, 'children.ages': '8',
+  'parents.covered': false, 'gmc.sumInsuredLakh': 5, 'gmc.members': 'Self + spouse + child', 'personalHealth.status': 'None declared', 'address.pincode': '400001',
+  'vehicles.twoWheeler.owned': true, 'vehicles.twoWheeler.reg': 'MH 01 AB 1234', 'vehicles.fourWheeler.owned': true, 'vehicles.fourWheeler.reg': 'MH 02 CD 5678',
+  'travel.international': true, 'travel.tripsPerYear': 2, 'home.owned': true, 'home.pincode': '400001',
+  'kyc.pan': 'ABCDE1234F', 'kyc.mobile': '98••• ••210', 'kyc.email': 'c•••••@company.com', 'kyc.address': 'Use profile address'
+};
+
+// Mock rating formulas. ILLUSTRATIVE ONLY — not real tariffs. Production: the SOAP rating service.
+const num = v => Number(String(v).replace(/[^\d.]/g, '')) || 0;
+const MOCK_RATES = {
+  health_base: (c, r) => num(c.sumInsured) * 900 * memberFactor(r.members.length) * ageFactor(r.members) * ({ Essential: 0.85, Premier: 1.3 }[c.option] || 1),
+  health_topup: (c, r) => num(c.sumInsured) * 110 * memberFactor(r.members.length) * ageFactor(r.members) * (5 / Math.max(num(c.option) || 5, 1)),
+  pa: c => num(c.sumInsured) * 320,
+  hospicash: (c, r) => num(c.sumInsured) * 1.1 * Math.max(r.members.length, 1),
+  travel: (c, r) => ({ Standard: 1200, Plus: 1800, Max: 2600 }[c.sumInsured] || 1500) * Math.max(r.travellers || 1, 1) * (c.option === 'Annual multi-trip' ? 2.8 : 1),
+  motor_2w: c => c.option === 'Third-party only' ? 720 : 1850,
+  motor_4w: c => c.option === 'Third-party only' ? 3420 : 14500,
+  home_building: c => num(c.sumInsured) * 95,
+  home_contents: c => num(c.sumInsured) * 160
+};
+function memberFactor(n) { return [1, 1, 1.6, 1.9, 2.3][n] || 2.3 + 0.35 * (n - 4); }
+function ageFactor(members) { const a = Math.max(0, ...members.map(m => +m.age || 0)); return a < 36 ? 1 : a < 46 ? 1.25 : a < 56 ? 1.7 : 2.4; }
+
+function toXml(name, v, ind = '      ') {
+  if (Array.isArray(v)) return v.map(x => toXml(name, x, ind)).join('\n');
+  if (v && typeof v === 'object') return `${ind}<rat:${name}>\n${Object.entries(v).map(([k, x]) => toXml(k, x, ind + '  ')).join('\n')}\n${ind}</rat:${name}>`;
+  const s = String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  return `${ind}<rat:${name}>${s}</rat:${name}>`;
+}
+const soapEnvelope = (op, body) => `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:rat="urn:PLACEHOLDER:rating">  <!-- replace namespace/operation from the real WSDL -->
+  <soapenv:Header><!-- WS-Security / auth header as required by the rating service --></soapenv:Header>
+  <soapenv:Body>
+    <rat:${op}>
+${Object.entries(body).map(([k, v]) => toXml(k, v)).join('\n')}
+    </rat:${op}>
+  </soapenv:Body>
+</soapenv:Envelope>`;
+
+const Adapters = {
+  profile: {
+    title: 'Employee profile', method: 'GET', path: '/api/v1/profile/me',
+    source: 'HRMS / group GMC policy system (to be confirmed by IT)',
+    notes: 'Returns flat key → value pairs. Field "prefill" keys in the journey config map to these keys, so new HR attributes need only a config change.',
+    async call() { await sleep(450); return { employeeId: 'EMP-MOCK-001', values: clone(MOCK_PROFILE) }; }
+  },
+  rating: {
+    title: 'Rating (SOAP)', method: 'POST', path: '/api/v1/quotes',
+    source: 'Core rating SOAP service — Spring Boot calls it via a JAX-WS / Apache CXF client generated from the WSDL',
+    notes: 'The browser never calls SOAP directly. The backend maps this JSON to the SOAP request, adds WS-Security, and maps the response back. The envelope shown in the log is ILLUSTRATIVE — the real one comes from the WSDL.',
+    async call(req) {
+      await sleep(350 + Math.random() * 250);
+      const lines = req.covers.map(c => ({ code: c.code, name: c.name, premium: Math.round((MOCK_RATES[c.rateKey] || (() => 1000))(c, req)) }));
+      const premium = lines.reduce((a, l) => a + l.premium, 0);
+      const gst = Math.round(premium * (req.gstPct || 0) / 100);
+      return { quoteId: uid('QT'), productCode: req.productCode, lines, premium, gst, total: premium + gst, currency: 'INR', validTill: new Date(Date.now() + 864e5).toISOString().slice(0, 10), mock: true };
+    },
+    soap(req, res) {
+      const rq = soapEnvelope('GetQuote', { ProductCode: req.productCode, Pincode: req.proposer.pincode, Member: req.members.map(m => ({ Relation: m.relation, Age: m.age })),
+        Travellers: req.travellers || 0, Cover: req.covers.map(c => ({ CoverCode: c.code, SumInsured: c.sumInsured ?? '', Option: c.option ?? '' })) });
+      const rs = res ? soapEnvelope('GetQuoteResponse', { QuoteId: res.quoteId, NetPremium: res.premium, Tax: res.gst, GrossPremium: res.total,
+        CoverPremium: res.lines.map(l => ({ CoverCode: l.code, Premium: l.premium })) }) : '';
+      return { request: rq, response: rs };
+    }
+  },
+  kyc: {
+    title: 'KYC verification', method: 'POST', path: '/api/v1/kyc/verify', source: 'CKYC / in-house KYC service (to be confirmed)',
+    notes: 'Called before payment. Mock always returns VERIFIED.',
+    async call(req) { await sleep(400); return { status: 'VERIFIED', kycRef: uid('KYC'), pan: req.pan }; }
+  },
+  payment: {
+    title: 'Payment', method: 'POST', path: '/api/v1/payments', source: 'Payment gateway (to be confirmed)',
+    notes: 'One payment for the combined total; the backend splits it per policy. Production would redirect to the gateway and confirm via callback.',
+    async call(req) { await sleep(700); return { status: 'SUCCESS', txnId: uid('TXN'), amount: req.amount }; }
+  },
+  policy: {
+    title: 'Policy issuance', method: 'POST', path: '/api/v1/policies', source: 'Policy admin system (to be confirmed)',
+    notes: 'One call per product — each policy is issued independently. Mock returns Processing for Motor (e.g. pending inspection) to show the non-instant path.',
+    async call(req) { await sleep(500); const processing = req.productCode === 'MOTOR'; return { policyNo: processing ? null : uid('POL'), status: processing ? 'Processing' : 'Issued', productCode: req.productCode }; }
+  }
+};
+
+async function callAdapter(key, req) {
+  const a = Adapters[key], t0 = performance.now();
+  const entry = { id: uid('LOG'), key, title: a.title, method: a.method, path: a.path, at: new Date().toLocaleTimeString(), req, res: null, err: null, ms: 0 };
+  S.log.unshift(entry); if (S.log.length > 60) S.log.pop();
+  try { entry.res = await a.call(req); return entry.res; }
+  catch (e) { entry.err = String(e && e.message || e); throw e; }
+  finally { entry.ms = Math.round(performance.now() - t0); if (key === 'rating') entry.soap = a.soap(req, entry.res); if (S.mode === 'console') render(); }
+}
+
+/* ----------------------------------------------------------------- State */
+function loadConfig() { try { const s = localStorage.getItem(STORE_KEY); if (s) return JSON.parse(s); } catch (e) {} return clone(DEFAULT_CONFIG); }
+let config = loadConfig();
+const S = {
+  mode: 'journey', stepId: null, section: 0, profile: {}, prefill: {}, profileStatus: 'idle', errors: {},
+  selection: {}, quotes: {}, quoting: {}, detail: null, custTab: null, kyc: {}, consents: {}, paying: false, payError: '', policies: [],
+  bTab: 'steps', selField: null, selBlock: null, layoutStep: 'profile', saved: '', log: [], jsonDraft: null, jsonErr: ''
+};
+function saveConfig() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(config)); S.saved = 'Saved in this browser'; }
+  catch (e) { S.saved = 'Browser storage unavailable — use Export JSON to keep changes'; }
+}
+function mutate(fn) { fn(config); saveConfig(); render(); }
+
+/* --------------------------------------------------------------- Helpers */
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  for (const c of kids.flat(Infinity)) { if (c == null || c === false) continue; el.append(c instanceof Node ? c : document.createTextNode(String(c))); }
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k.startsWith('on')) el.addEventListener(k.slice(2).toLowerCase(), v);
+    else if (k === 'value') el.value = v;
+    else if (k === 'checked') el.checked = !!v;
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  return el;
+}
+const coerce = v => v === true || v === false ? v : v === 'true' ? true : v === 'false' ? false : (v !== '' && v != null && !isNaN(+v)) ? +v : v;
+function test(c, ctx) {
+  const a = coerce(ctx[c.field]), b = coerce(c.value);
+  switch (c.op) { case '==': return a === b; case '!=': return a !== b; case '<': return +a < +b; case '<=': return +a <= +b; case '>': return +a > +b; case '>=': return +a >= +b; }
+  return false;
+}
+const shown = (o, ctx) => !o.showIf || test(o.showIf, ctx);
+const tpl = (t, ctx) => String(t || '').replace(/\{(\w+)\}/g, (m, k) => ctx[k] == null || ctx[k] === '' ? '—' : ctx[k] === true ? 'Yes' : ctx[k] === false ? 'No' : ctx[k]);
+const ages = s => String(s || '').split(',').map(x => +x.trim()).filter(x => x > 0);
+const productById = id => config.catalogue.find(p => p.id === id);
+const enabledSteps = () => config.steps.filter(s => s.enabled);
+const currentStep = () => enabledSteps().find(s => s.id === S.stepId) || enabledSteps()[0];
+
+function context() {
+  const p = S.profile, nChild = +p.children_count || 0, parents = p.has_parents ? (ages(p.parent_ages).length || 2) : 0;
+  return { ...p, family_count: 1 + (p.has_spouse ? 1 : 0) + nChild + parents, vehicle_count: (p.own_2w ? 1 : 0) + (p.own_4w ? 1 : 0) };
+}
+function familyMembers() {
+  const p = S.profile, out = [{ key: 'self', relation: 'Self', label: 'Self', age: +p.emp_age || 0 }];
+  if (p.has_spouse) out.push({ key: 'spouse', relation: 'Spouse', label: 'Spouse', age: +p.spouse_age || 0 });
+  const ca = ages(p.child_ages); for (let i = 0; i < (+p.children_count || 0); i++) out.push({ key: 'child' + i, relation: 'Child', label: 'Child ' + (i + 1), age: ca[i] || 0 });
+  if (p.has_parents) { const pa = ages(p.parent_ages); (pa.length ? pa : [0, 0]).forEach((a, i) => out.push({ key: 'parent' + i, relation: 'Parent', label: 'Parent ' + (i + 1), age: a })); }
+  return out;
+}
+
+function recommendations() {
+  const ctx = context(), out = [], seen = new Set();
+  for (const r of config.rules) {
+    if (!r.enabled) continue;
+    const prod = productById(r.product);
+    if (!prod || !prod.enabled || seen.has(prod.id)) continue;
+    const res = r.when.map(c => test(c, ctx));
+    if (r.when.length && !(r.match === 'any' ? res.some(Boolean) : res.every(Boolean))) continue;
+    seen.add(prod.id);
+    out.push({ product: prod, tag: r.tag, headline: tpl(r.headline, ctx), reasons: r.reasons.map(x => tpl(x, ctx)), rule: r });
+  }
+  if (config.showUnmatched) for (const p of config.catalogue) if (p.enabled && !seen.has(p.id))
+    out.push({ product: p, tag: 'Optional', headline: 'Available to you', reasons: ['Not triggered by your profile — available if you want it'], rule: null });
+  return out;
+}
+function visibleComps(prod) { const ctx = context(); return prod.components.filter(c => shown(c, ctx)); }
+function ensureSelection(rec) {
+  const pid = rec.product.id;
+  if (S.selection[pid]) return S.selection[pid];
+  const comps = {};
+  for (const c of rec.product.components) comps[c.id] = { included: !!c.included, si: c.si ? c.si.default : null, opt: c.opt ? c.opt.default : null };
+  return (S.selection[pid] = { selected: !!(config.tags[rec.tag] || {}).preselect, comps, members: familyMembers().map(m => m.key) });
+}
+const selectedProducts = () => recommendations().filter(r => S.selection[r.product.id] && S.selection[r.product.id].selected).map(r => r.product);
+
+/* ----------------------------------------------------------------- Quotes */
+function quoteRequest(prod) {
+  const sel = S.selection[prod.id], p = S.profile, fam = familyMembers();
+  const members = prod.usesMembers ? fam.filter(m => sel.members.includes(m.key)).map(m => ({ relation: m.relation, age: m.age })) : [];
+  return {
+    productCode: prod.code || prod.id, gstPct: prod.gstPct,
+    proposer: { name: p.emp_name, age: +p.emp_age || 0, pincode: p.pincode },
+    members, travellers: prod.id === 'travel' ? context().family_count : undefined,
+    vehicles: prod.id === 'motor' ? [p.own_2w && { type: '2W', reg: p.reg_2w }, p.own_4w && { type: '4W', reg: p.reg_4w }].filter(Boolean) : undefined,
+    covers: visibleComps(prod).filter(c => sel.comps[c.id].included).map(c => ({ code: c.code || c.id, name: c.name, rateKey: c.rate, sumInsured: sel.comps[c.id].si, option: sel.comps[c.id].opt }))
+  };
+}
+const qTimers = {};
+function scheduleQuote(prod) {
+  const req = quoteRequest(prod), key = JSON.stringify(req);
+  if (S.quotes[prod.id] && S.quotes[prod.id].key === key) return;
+  if (!req.covers.length) { S.quotes[prod.id] = { key, res: { lines: [], premium: 0, gst: 0, total: 0 } }; return; }
+  S.quoting[prod.id] = true;
+  clearTimeout(qTimers[prod.id]);
+  qTimers[prod.id] = setTimeout(async () => {
+    try { const res = await callAdapter('rating', req); if (JSON.stringify(quoteRequest(prod)) === key) S.quotes[prod.id] = { key, res }; }
+    catch (e) { S.quotes[prod.id] = { key, err: 'Rating service unavailable — please retry' }; }
+    S.quoting[prod.id] = false; render();
+  }, 300);
+}
+function quoteAllSelected() { selectedProducts().forEach(scheduleQuote); }
+function totals() {
+  let premium = 0, gst = 0, pending = false;
+  for (const p of selectedProducts()) { const q = S.quotes[p.id]; if (S.quoting[p.id] || !q || !q.res) { pending = true; continue; } premium += q.res.premium; gst += q.res.gst; }
+  return { premium, gst, total: premium + gst, pending };
+}
+
+/* ------------------------------------------------------------- Navigation */
+async function goto(stepId) {
+  S.stepId = stepId; S.detail = null; S.errors = {};
+  const st = currentStep();
+  if (['profile', 'recommend', 'customise', 'review', 'checkout'].includes(st.type) && S.profileStatus === 'idle') await loadProfile();
+  if (['recommend', 'customise', 'review', 'checkout'].includes(st.type)) { recommendations().forEach(ensureSelection); quoteAllSelected(); }
+  render(); window.scrollTo(0, 0);
+}
+async function loadProfile() {
+  S.profileStatus = 'loading'; render();
+  try {
+    const res = await callAdapter('profile', {});
+    for (const [fid, f] of Object.entries(config.fields)) {
+      if (f.prefill && res.values[f.prefill] !== undefined) { S.profile[fid] = res.values[f.prefill]; S.prefill[fid] = res.values[f.prefill]; }
+      else if (S.profile[fid] === undefined) S.profile[fid] = f.type === 'toggle' ? false : '';
+    }
+    for (const k of ['pan', 'mobile', 'email', 'address']) S.kyc[k] = res.values['kyc.' + k] || '';
+    S.profileStatus = 'ready';
+  } catch (e) { S.profileStatus = 'error'; }
+}
+function validateProfile() {
+  const ctx = context(), errs = {};
+  for (const sec of config.sections) for (const fid of sec.fields) {
+    const f = config.fields[fid];
+    if (f && f.required && shown(f, ctx) && (S.profile[fid] === '' || S.profile[fid] == null)) errs[fid] = 'Required';
+  }
+  S.errors = errs;
+  const bad = config.sections.findIndex(sec => sec.fields.some(f => errs[f]));
+  if (bad >= 0) S.section = bad;
+  return !Object.keys(errs).length;
+}
+function next() {
+  const st = currentStep(), list = enabledSteps(), i = list.indexOf(st);
+  if (st.type === 'profile' && !validateProfile()) { render(); return; }
+  if ((st.type === 'recommend' || st.type === 'customise') && !selectedProducts().length) { alert('Select at least one product to continue.'); return; }
+  if (i < list.length - 1) goto(list[i + 1].id);
+}
+function prev() { const list = enabledSteps(), i = list.indexOf(currentStep()); if (i > 0) goto(list[i - 1].id); }
+async function pay(block) {
+  const items = (block && block.items) || [];
+  if (items.some((_, i) => !S.consents[i])) { S.payError = 'Please accept all declarations to continue.'; render(); return; }
+  const t = totals(); if (t.pending) return;
+  S.paying = true; S.payError = ''; render();
+  try {
+    await callAdapter('kyc', { pan: S.kyc.pan, mobile: S.kyc.mobile, email: S.kyc.email });
+    const payRes = await callAdapter('payment', { amount: t.total, currency: 'INR', orderRef: uid('ORD'), products: selectedProducts().map(p => p.code) });
+    S.policies = [];
+    for (const p of selectedProducts()) {
+      const r = await callAdapter('policy', { productCode: p.code, quoteId: S.quotes[p.id].res.quoteId, paymentTxn: payRes.txnId });
+      S.policies.push({ product: p, ...r });
+    }
+    S.paying = false;
+    const done = enabledSteps().find(s => s.type === 'done'); if (done) goto(done.id); else render();
+  } catch (e) { S.paying = false; S.payError = 'Payment could not be completed (mock error).'; render(); }
+}
+
+/* -------------------------------------------------------- Block renderers */
+const R = {};
+R.hero = () => {
+  const steps = enabledSteps().filter(s => s.counted);
+  return h('div', { class: 'hero' },
+    h('div', null, h('div', { class: 'eyebrow' }, 'GROUP-TO-RETAIL PROTECTION'), h('h1', null, currentStep().title), h('p', null, currentStep().subtitle)),
+    h('div', { class: 'how' }, h('h3', null, 'How it works'),
+      h('ol', null, steps.map((s, i) => h('li', null, h('b', null, i + 1), h('div', null, h('strong', null, s.title), h('div', { class: 'note' }, s.subtitle)))))));
+};
+R.stepHeader = () => {
+  const st = currentStep(), counted = enabledSteps().filter(s => s.counted), i = counted.indexOf(st);
+  const chip = i >= 0 ? `Step ${i + 1} of ${counted.length}` : st.chip;
+  return h('div', { class: 'step-head' }, h('div', { class: 'row' }, h('h1', null, st.title), chip && h('span', { class: 'chip' }, chip)), st.subtitle && h('p', null, st.subtitle));
+};
+R.heading = b => h('h2', null, b.text);
+R.paragraph = b => h('p', { style: 'margin:0' }, b.text);
+R.banner = b => h('div', { class: 'banner' }, b.text);
+R.note = b => h('div', { class: 'note' }, b.text);
+R.cta = b => {
+  const st = currentStep(), list = enabledSteps(), first = list.indexOf(st) <= 0 || st.type === 'done';
+  const busy = b.action === 'pay' && (S.paying || totals().pending);
+  return h('div', { class: 'cta-row' },
+    !first && b.action !== 'prev' && h('button', { class: 'btn ghost', onclick: prev }, 'Back'),
+    h('button', { class: 'btn', disabled: busy, onclick: () => b.action === 'pay' ? pay(st.blocks.find(x => x.type === 'consents')) : b.action === 'prev' ? prev() : next() },
+      S.paying && b.action === 'pay' ? [h('span', { class: 'spinner' }), ' Processing…'] : b.label));
+};
+
+function fieldInput(fid, f) {
+  const v = S.profile[fid], set = (val, rerender) => { S.profile[fid] = val; delete S.errors[fid]; if (rerender) render(); };
+  if (f.type === 'toggle') return h('label', { class: 'switch' }, h('input', { type: 'checkbox', checked: !!v, onchange: e => set(e.target.checked, true) }), h('span', null, v ? 'Yes' : 'No'));
+  if (f.type === 'select') return h('select', { onchange: e => set(e.target.value, true), value: v ?? '' }, h('option', { value: '' }, 'Select…'), (f.options || []).map(o => h('option', { value: o }, o)));
+  const inp = h('input', { type: f.type === 'number' ? 'number' : 'text', value: v ?? '', min: f.type === 'number' ? 0 : null,
+    oninput: e => set(f.type === 'number' ? (e.target.value === '' ? '' : +e.target.value) : e.target.value), onchange: () => render() });
+  return f.prefix || f.suffix ? h('div', { class: 'affix' }, f.prefix && h('span', null, f.prefix), inp, f.suffix && h('span', null, f.suffix)) : inp;
+}
+R.profileForm = () => {
+  if (S.profileStatus !== 'ready') return h('div', { class: 'card' }, S.profileStatus === 'error' ? 'Could not load your profile.' : [h('span', { class: 'spinner' }), ' Loading your pre-filled details…']);
+  const ctx = context(), secs = config.sections, si = Math.min(S.section, secs.length - 1), sec = secs[si];
+  if (!sec) return h('div', { class: 'card' }, 'No profile sections configured.');
+  return h('div', { class: 'card' },
+    h('div', { class: 'tabs', role: 'tablist' }, secs.map((s, i) => h('button', { role: 'tab', 'aria-selected': String(i === si), onclick: () => { S.section = i; render(); } }, `${i + 1}  ${s.title}`))),
+    h('div', { class: 'grid2' }, sec.fields.map(fid => {
+      const f = config.fields[fid]; if (!f || !shown(f, ctx)) return null;
+      const pre = f.prefill && S.prefill[fid] !== undefined && S.prefill[fid] === S.profile[fid];
+      return h('div', { class: 'field' + (pre ? ' pre' : '') },
+        h('div', { class: 'lbl' }, h('span', null, f.label, f.required ? ' *' : ''), pre && h('span', { class: 'badge' }, 'Pre-filled')),
+        fieldInput(fid, f), f.help && h('div', { class: 'help' }, f.help), S.errors[fid] && h('div', { class: 'err' }, S.errors[fid]));
+    })),
+    si < secs.length - 1 && h('div', { class: 'cta-row', style: 'margin-top:14px' }, h('button', { class: 'btn ghost small', onclick: () => { S.section = si + 1; render(); window.scrollTo(0, 0); } }, `Continue to ${secs[si + 1].title.toLowerCase()} →`)),
+    h('p', { class: 'note', style: 'margin:12px 0 0' }, 'Only relevant follow-up fields are displayed.'));
+};
+
+function compSummary(prod) { const sel = S.selection[prod.id]; return visibleComps(prod).filter(c => sel && sel.comps[c.id].included).map(c => c.name).join(' + ') || 'Nothing included'; }
+function siLabel(c, v) { return v == null ? '' : c.si.unit === 'lakh' ? `₹${v} lakh` : c.si.unit ? `${typeof v === 'number' && c.si.unit.startsWith('₹') ? '₹' + v + c.si.unit.slice(1) : v + ' ' + c.si.unit}` : v; }
+
+R.recommendationCards = () => {
+  const recs = recommendations();
+  if (!recs.length) return h('div', { class: 'card' }, 'No products configured.');
+  return h('div', { class: 'grid2' }, recs.map(rec => {
+    const sel = ensureSelection(rec), tone = (config.tags[rec.tag] || {}).tone || 'muted';
+    return h('div', { class: 'rec' + (sel.selected ? ' sel' : '') },
+      h('div', { class: 'top' }, h('h3', null, rec.product.name), h('span', { class: 'tag ' + tone }, rec.tag)),
+      h('div', null, h('strong', null, compSummary(rec.product))),
+      h('div', { class: 'why' }, rec.headline),
+      h('div', { class: 'acts' },
+        h('label', { class: 'switch' }, h('input', { type: 'checkbox', checked: sel.selected, onchange: e => { sel.selected = e.target.checked; quoteAllSelected(); render(); } }), h('span', null, sel.selected ? 'Selected' : 'Select')),
+        h('button', { class: 'btn ghost small', style: 'margin-left:auto', onclick: () => { S.detail = rec.product.id; render(); } }, 'Details & why')));
+  }));
+};
+function detailModal() {
+  const rec = recommendations().find(r => r.product.id === S.detail); if (!rec) return null;
+  const prod = rec.product, sel = ensureSelection(rec), close = () => { S.detail = null; render(); };
+  return h('div', { class: 'modal-bg', onclick: e => { if (e.target === e.currentTarget) close(); } },
+    h('div', { class: 'modal', role: 'dialog', 'aria-label': prod.name + ' recommendation' },
+      h('div', { class: 'row', style: 'display:flex;justify-content:space-between;align-items:center;margin-bottom:12px' },
+        h('h2', null, `Recommended ${prod.name} Protection`), h('button', { class: 'iconbtn', onclick: close, 'aria-label': 'Close' }, '✕')),
+      h('div', { class: 'detail' },
+        h('div', null, visibleComps(prod).map(c => {
+          const cs = sel.comps[c.id];
+          return h('div', { class: 'comp-row' + (cs.included ? ' inc' : '') },
+            h('strong', null, c.name), h('span', null, c.si ? siLabel(c, cs.si) : c.opt ? cs.opt : ''),
+            h('span', { class: 'muted' }, c.scope || (c.opt && c.si ? cs.opt : '')),
+            c.optional ? h('button', { class: 'btn small ' + (cs.included ? 'ghost' : 'secondary'), onclick: () => { cs.included = !cs.included; scheduleQuote(prod); render(); } }, cs.included ? 'Remove' : 'Add')
+                       : h('span', { class: 'badge' }, 'Included'));
+        })),
+        h('div', { class: 'whybox' }, h('strong', null, 'Why recommended?'), h('ul', null, rec.reasons.map(r => h('li', null, r))),
+          h('div', { class: 'cta-row', style: 'margin-top:14px;justify-content:flex-start' },
+            h('button', { class: 'btn small', onclick: () => { sel.selected = true; quoteAllSelected(); close(); } }, 'Proceed'),
+            h('button', { class: 'btn small secondary', onclick: () => { sel.selected = true; S.custTab = prod.id; const c = enabledSteps().find(s => s.type === 'customise'); c ? goto(c.id) : close(); } }, 'Customise'))))));
+}
+
+function quoteBox(prod) {
+  const q = S.quotes[prod.id];
+  if (S.quoting[prod.id]) return h('div', { class: 'card' }, h('span', { class: 'spinner' }), ' Recalculating premium…');
+  if (!q) return h('div', { class: 'card note' }, 'Premium will be calculated.');
+  if (q.err) return h('div', { class: 'card bad' }, q.err);
+  return h('div', { class: 'card' }, h('div', { style: 'display:flex;justify-content:space-between;align-items:center;margin-bottom:6px' }, h('strong', null, 'Updated premium'), h('span', { class: 'mockflag' }, 'MOCK RATE')),
+    h('table', { class: 'lines' }, h('tbody', null, q.res.lines.map(l => h('tr', null, h('td', null, l.name), h('td', null, inr(l.premium)))),
+      h('tr', null, h('td', null, `GST (${prod.gstPct}%)`), h('td', null, inr(q.res.gst))),
+      h('tr', { class: 'total' }, h('td', null, 'Total'), h('td', null, inr(q.res.total))))));
+}
+R.customisePanel = () => {
+  const prods = selectedProducts();
+  if (!prods.length) return h('div', { class: 'card' }, 'No products selected yet. Go back and select at least one recommendation.');
+  if (!prods.find(p => p.id === S.custTab)) S.custTab = prods[0].id;
+  const prod = productById(S.custTab), sel = S.selection[prod.id], fam = familyMembers();
+  const change = () => { scheduleQuote(prod); render(); };
+  return h('div', null,
+    h('div', { class: 'tabs', role: 'tablist' }, prods.map(p => h('button', { role: 'tab', 'aria-selected': String(p.id === prod.id), onclick: () => { S.custTab = p.id; render(); } }, p.name))),
+    h('div', { class: 'cust' },
+      h('div', { class: 'card' },
+        prod.usesMembers && h('div', { class: 'field', style: 'margin-bottom:14px' }, h('div', { class: 'lbl' }, 'Members'),
+          h('div', { class: 'members' }, fam.map(m => {
+            const on = sel.members.includes(m.key);
+            return h('label', { class: on ? 'on' : '' }, h('input', { type: 'checkbox', checked: on, disabled: m.key === 'self', onchange: e => { sel.members = e.target.checked ? [...sel.members, m.key] : sel.members.filter(k => k !== m.key); change(); } }), `${m.label}${m.age ? ' · ' + m.age : ''}`);
+          }))),
+        visibleComps(prod).map(c => {
+          const cs = sel.comps[c.id];
+          return h('div', { class: 'comp-row' + (cs.included ? ' inc' : '') },
+            h('div', null, h('strong', null, c.name), c.scope && h('div', { class: 'note' }, c.scope)),
+            c.si ? h('label', { class: 'field' }, h('span', { class: 'lbl' }, c.si.label), h('select', { 'aria-label': c.name + ' ' + c.si.label, disabled: !cs.included, value: String(cs.si), onchange: e => { cs.si = coerce(e.target.value); change(); } }, c.si.options.map(o => h('option', { value: String(o) }, siLabel(c, o))))) : h('span'),
+            c.opt ? h('label', { class: 'field' }, h('span', { class: 'lbl' }, c.opt.label), h('select', { 'aria-label': c.name + ' ' + c.opt.label, disabled: !cs.included, value: cs.opt, onchange: e => { cs.opt = e.target.value; change(); } }, c.opt.options.map(o => h('option', { value: o }, o)))) : h('span'),
+            c.optional ? h('label', { class: 'switch' }, h('input', { type: 'checkbox', checked: cs.included, 'aria-label': 'Include ' + c.name, onchange: e => { cs.included = e.target.checked; change(); } })) : h('span', { class: 'badge' }, 'Included'));
+        }),
+        h('div', { class: 'cta-row', style: 'justify-content:space-between;margin-top:8px' },
+          h('button', { class: 'linkbtn', onclick: () => { sel.selected = false; render(); } }, `Remove ${prod.name} from my selection`))),
+      quoteBox(prod)));
+};
+function productDesc(prod) {
+  const ctx = context(), sel = S.selection[prod.id];
+  if (prod.usesMembers) return `${sel ? sel.members.length : ctx.family_count} member(s)`;
+  if (prod.id === 'travel') return `${ctx.family_count} traveller(s)`;
+  if (prod.id === 'motor') return `${ctx.vehicle_count} vehicle(s)`;
+  if (prod.id === 'home') return S.profile.own_home ? 'Owned home' : '';
+  return '';
+}
+R.reviewList = () => {
+  const recs = recommendations(), cust = enabledSteps().find(s => s.type === 'customise');
+  return h('div', { class: 'card' }, recs.map(rec => {
+    const p = rec.product, sel = ensureSelection(rec), q = S.quotes[p.id];
+    return h('div', { class: 'rv-row' },
+      h('strong', null, p.name), h('span', { class: 'muted' }, productDesc(p)), h('span', null, compSummary(p)),
+      h('span', { class: 'amt' }, !sel.selected ? h('span', { class: 'muted' }, 'Not selected') : S.quoting[p.id] || !q ? h('span', { class: 'spinner' }) : q.err ? h('span', { class: 'bad' }, 'Error') : inr(q.res.total)),
+      h('span', { style: 'display:flex;gap:6px' },
+        h('button', { class: 'btn small ' + (sel.selected ? 'ghost' : 'secondary'), onclick: () => { sel.selected = !sel.selected; quoteAllSelected(); render(); } }, sel.selected ? 'Remove' : 'Add'),
+        sel.selected && cust && h('button', { class: 'btn small ghost', onclick: () => { S.custTab = p.id; goto(cust.id); } }, 'Edit')));
+  }));
+};
+R.paymentSummary = () => {
+  const t = totals(), n = selectedProducts().length;
+  return h('div', { class: 'card', style: 'background:var(--blue-soft);border-color:#cdd9f5' },
+    h('div', { style: 'display:flex;justify-content:space-between;align-items:center' }, h('strong', null, 'Payment summary'), h('span', { class: 'mockflag' }, 'MOCK RATES')),
+    h('table', { class: 'lines' }, h('tbody', null,
+      h('tr', null, h('td', null, `Premium (${n} product${n === 1 ? '' : 's'})`), h('td', null, t.pending ? '…' : inr(t.premium))),
+      h('tr', null, h('td', null, 'GST'), h('td', null, t.pending ? '…' : inr(t.gst))),
+      h('tr', { class: 'total' }, h('td', null, 'Total payable'), h('td', null, t.pending ? h('span', { class: 'spinner' }) : inr(t.total))))));
+};
+R.kycForm = () => h('div', { class: 'card' }, h('div', { class: 'grid4' }, [['pan', 'PAN'], ['mobile', 'Mobile number'], ['email', 'Email'], ['address', 'Address']].map(([k, l]) =>
+  h('div', { class: 'field pre' }, h('div', { class: 'lbl' }, h('span', null, l), h('span', { class: 'badge' }, 'Pre-filled')),
+    h('input', { type: 'text', value: S.kyc[k] || '', oninput: e => { S.kyc[k] = e.target.value; } })))));
+R.consents = b => h('div', { class: 'card checks' }, h('strong', null, 'Declarations and consent'),
+  (b.items || []).map((t, i) => h('label', null, h('input', { type: 'checkbox', checked: !!S.consents[i], onchange: e => { S.consents[i] = e.target.checked; S.payError = ''; render(); } }), h('span', null, t))),
+  S.payError && h('div', { class: 'err bad', style: 'margin-top:6px' }, S.payError));
+R.wallet = () => h('div', { class: 'card' }, h('h3', { style: 'margin-bottom:6px' }, 'My Policies'),
+  S.policies.length ? S.policies.map(p => h('div', { class: 'wallet-row' },
+    h('div', null, h('strong', null, p.product.name), h('div', { class: 'note' }, p.policyNo ? 'Policy ' + p.policyNo : 'Policy number on issuance')),
+    h('span', { class: 'badge' + (p.status === 'Issued' ? '' : ' amber') }, p.status),
+    h('button', { class: 'linkbtn', onclick: () => alert('Mock: the policy document would open here (Policy admin system).') }, p.status === 'Issued' ? 'View policy →' : 'Track status →')))
+  : h('p', { class: 'note' }, 'No policies yet — complete checkout to see them here.'));
+R.nextBestAction = () => {
+  const bought = new Set(S.policies.map(p => p.product.id)), nba = recommendations().find(r => !bought.has(r.product.id));
+  if (!nba) return null;
+  const rec = enabledSteps().find(s => s.type === 'recommend');
+  return h('div', { class: 'card', style: 'background:var(--brand-soft);border-color:#ecc9cf' }, h('strong', null, 'Next-best action'),
+    h('p', null, `Complete your ${nba.product.name} insurance details — ${nba.headline.toLowerCase()}.`),
+    h('button', { class: 'btn small', onclick: () => { Object.values(S.selection).forEach(s => s.selected = false); S.selection[nba.product.id].selected = true; S.quotes = {}; rec && goto(rec.id); } }, 'Continue profile'));
+};
+function renderBlock(b) { const fn = R[b.type]; return h('div', { class: 'block' }, fn ? fn(b) : h('div', { class: 'warn' }, 'Unknown block: ' + b.type)); }
+
+/* --------------------------------------------------------------- Journey */
+function journeyView() {
+  const st = currentStep();
+  if (!st) return h('div', { class: 'page' }, h('div', { class: 'warn' }, 'No enabled steps. Open the Workflow builder to enable one.'));
+  return h('div', null,
+    h('div', { class: 'portal-head' }, h('div', { class: 'in' }, h('div', { class: 'logo' }, config.brand.name, h('small', null, config.brand.tagline)),
+      h('nav', null, h('span', null, 'Products'), h('span', null, 'My Policies')))),
+    h('main', { class: 'page' }, st.blocks.map(renderBlock)),
+    S.detail && detailModal());
+}
+
+/* --------------------------------------------------------------- DnD util */
+let DRAG = null;
+function draggable(payload, attrs = {}) {
+  return { ...attrs, draggable: 'true', ondragstart: e => { DRAG = payload; e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', 'x'); } catch (_) {} }, ondragend: () => { DRAG = null; document.querySelectorAll('.over,.dropbefore').forEach(n => n.classList.remove('over', 'dropbefore')); } };
+}
+// Drop target for a list. onDrop(payload, index) — index = insertion position.
+function dropList(listId, onDrop, accept, kids, cls = '') {
+  const el = h('div', { class: 'dnd-list ' + cls, 'data-list': listId,
+    ondragover: e => { if (!DRAG || !accept(DRAG)) return; e.preventDefault(); el.classList.add('over');
+      el.querySelectorAll(':scope > .item').forEach(n => n.classList.remove('dropbefore'));
+      const t = e.target.closest('.item'); if (t && t.parentNode === el) t.classList.add('dropbefore'); },
+    ondragleave: e => { if (!el.contains(e.relatedTarget)) { el.classList.remove('over'); el.querySelectorAll('.dropbefore').forEach(n => n.classList.remove('dropbefore')); } },
+    ondrop: e => { if (!DRAG || !accept(DRAG)) return; e.preventDefault(); const items = [...el.querySelectorAll(':scope > .item')], t = e.target.closest('.item');
+      const idx = t && t.parentNode === el ? items.indexOf(t) : items.length; const p = DRAG; DRAG = null; onDrop(p, idx); } }, kids);
+  return el;
+}
+function moveIn(arr, from, to) { const [x] = arr.splice(from, 1); arr.splice(to > from ? to - 1 : to, 0, x); }
+const upDown = (arr, i) => [
+  h('button', { class: 'iconbtn', title: 'Move up', 'aria-label': 'Move up', disabled: i === 0, onclick: e => { e.stopPropagation(); mutate(() => moveIn(arr, i, i - 1)); } }, '↑'),
+  h('button', { class: 'iconbtn', title: 'Move down', 'aria-label': 'Move down', disabled: i === arr.length - 1, onclick: e => { e.stopPropagation(); mutate(() => moveIn(arr, i, i + 2)); } }, '↓')];
+
+/* --------------------------------------------------------------- Builder */
+function stepWarnings() {
+  const order = enabledSteps().map(s => s.type), w = [], pos = t => order.indexOf(t);
+  for (const t of CORE_STEPS) if (pos(t) < 0) w.push(`Required step "${t}" is disabled or missing.`);
+  const before = (a, b) => { if (pos(a) >= 0 && pos(b) >= 0 && pos(a) > pos(b)) w.push(`"${a}" must come before "${b}".`); };
+  before('profile', 'recommend'); before('recommend', 'customise'); before('recommend', 'review'); before('customise', 'review'); before('review', 'checkout'); before('checkout', 'done');
+  if (pos('done') >= 0 && pos('done') !== order.length - 1) w.push('"done" should be the last step.');
+  return w;
+}
+function stepsTab() {
+  const sel = config.steps.find(s => s.id === S.layoutStep) || config.steps[0];
+  return h('div', { class: 'cols two' },
+    h('div', { class: 'panel' }, h('h3', null, 'Journey steps — drag to reorder'),
+      stepWarnings().map(w => h('div', { class: 'warn' }, w)),
+      dropList('steps', (p, idx) => mutate(c => moveIn(c.steps, c.steps.findIndex(s => s.id === p.id), idx)), p => p.kind === 'step',
+        config.steps.map((s, i) => h('div', draggable({ kind: 'step', id: s.id }, { class: 'item' + (s.enabled ? '' : ' off') + (s.id === sel.id ? ' selected' : ''), onclick: () => { S.layoutStep = s.id; render(); } }),
+          h('span', { class: 'grip', 'aria-hidden': 'true' }, '⋮⋮'),
+          h('div', { class: 'grow' }, h('strong', null, s.title), h('div', { class: 'sub' }, `${s.type} · ${s.blocks.length} blocks${s.counted ? ' · counted in "Step x of y"' : ''}`)),
+          h('label', { class: 'switch', onclick: e => e.stopPropagation() }, h('input', { type: 'checkbox', checked: s.enabled, 'aria-label': 'Enable ' + s.title, onchange: e => mutate(() => { s.enabled = e.target.checked; }) })),
+          upDown(config.steps, i)))),
+      h('p', { class: 'note' }, 'Core steps (profile, recommend, review, checkout, done) can be reordered but the builder warns when an order would break the journey. Intro and Customise are optional.')),
+    h('div', { class: 'panel' }, h('h3', null, 'Step settings'),
+      h('div', { class: 'form-grid' },
+        h('label', null, 'Title', h('input', { value: sel.title, onchange: e => mutate(() => { sel.title = e.target.value; }) })),
+        h('label', null, 'Subtitle', h('textarea', { rows: 3, onchange: e => mutate(() => { sel.subtitle = e.target.value; }) }, sel.subtitle || '')),
+        h('label', { class: 'inline' }, h('input', { type: 'checkbox', checked: sel.counted, onchange: e => mutate(() => { sel.counted = e.target.checked; }) }), 'Count in "Step x of y"'),
+        !sel.counted && h('label', null, 'Chip text (when not counted)', h('input', { value: sel.chip || '', onchange: e => mutate(() => { sel.chip = e.target.value; }) })),
+        h('button', { class: 'btn small ghost', onclick: () => { S.bTab = 'layout'; render(); } }, 'Edit this screen\'s layout →'),
+        h('button', { class: 'btn small ghost', onclick: () => { S.mode = 'journey'; goto(sel.id); } }, 'Preview this step →'))));
+}
+
+function fieldPalette() {
+  return [['text', 'Text'], ['number', 'Number'], ['toggle', 'Yes / No toggle'], ['select', 'Dropdown']].map(([t, l]) => h('div', draggable({ kind: 'newField', type: t }, { class: 'palette-item' }), '+ ' + l));
+}
+function profileTab() {
+  const allIds = Object.keys(config.fields), f = config.fields[S.selField];
+  const dropField = sec => (p, idx) => mutate(c => {
+    let id = p.id;
+    if (p.kind === 'newField') { id = 'custom_' + Math.random().toString(36).slice(2, 6); c.fields[id] = { label: 'New ' + p.type + ' field', type: p.type, options: p.type === 'select' ? ['Option A', 'Option B'] : undefined }; S.selField = id; }
+    else { const from = c.sections.find(s => s.id === p.sec); const fi = from.fields.indexOf(id); if (from.id === sec.id && fi < idx) idx--; from.fields.splice(fi, 1); }
+    c.sections.find(s => s.id === sec.id).fields.splice(idx, 0, id);
+  });
+  return h('div', { class: 'cols' },
+    h('div', { class: 'panel' }, h('h3', null, 'Field palette'), h('p', { class: 'note', style: 'margin-top:0' }, 'Drag into a section.'), fieldPalette()),
+    h('div', { class: 'panel' }, h('h3', null, 'Profile sections'),
+      config.sections.map((sec, si) => h('div', { class: 'sectionbox' },
+        h('div', { class: 'sh' }, h('span', { class: 'chip' }, si + 1), h('input', { value: sec.title, 'aria-label': 'Section title', onchange: e => mutate(() => { sec.title = e.target.value; }) }),
+          upDown(config.sections, si),
+          h('button', { class: 'iconbtn', title: 'Delete section', 'aria-label': 'Delete section', onclick: () => { if (sec.fields.length && !confirm('Delete section and its fields from the form?')) return; mutate(c => c.sections.splice(si, 1)); } }, '✕')),
+        dropList('sec-' + sec.id, dropField(sec), p => p.kind === 'field' || p.kind === 'newField',
+          sec.fields.map(fid => { const fd = config.fields[fid]; if (!fd) return null;
+            return h('div', draggable({ kind: 'field', id: fid, sec: sec.id }, { class: 'item' + (S.selField === fid ? ' selected' : ''), onclick: () => { S.selField = fid; render(); } }),
+              h('span', { class: 'grip', 'aria-hidden': 'true' }, '⋮⋮'),
+              h('div', { class: 'grow' }, h('strong', null, fd.label), h('div', { class: 'sub' }, [fd.type, fd.prefill && 'pre-filled', fd.required && 'required', fd.showIf && `if ${fd.showIf.field} ${fd.showIf.op} ${fd.showIf.value}`].filter(Boolean).join(' · '))),
+              upDown(sec.fields, sec.fields.indexOf(fid))); })))),
+      h('button', { class: 'btn small ghost', onclick: () => mutate(c => c.sections.push({ id: 'sec_' + Math.random().toString(36).slice(2, 6), title: 'New section', fields: [] })) }, '+ Add section')),
+    h('div', { class: 'panel' }, h('h3', null, 'Field properties'),
+      !f ? h('p', { class: 'note' }, 'Select a field to edit it.') : h('div', { class: 'form-grid' },
+        h('label', null, 'Field id (used in rules)', h('input', { value: S.selField, disabled: true })),
+        h('label', null, 'Label', h('input', { value: f.label, onchange: e => mutate(() => { f.label = e.target.value; }) })),
+        h('label', null, 'Section', h('select', { value: (config.sections.find(s => s.fields.includes(S.selField)) || {}).id || '', onchange: e => mutate(c => { c.sections.forEach(s => s.fields = s.fields.filter(x => x !== S.selField)); c.sections.find(s => s.id === e.target.value).fields.push(S.selField); }) },
+          config.sections.map(s => h('option', { value: s.id }, s.title)))),
+        h('label', null, 'Type', h('select', { value: f.type, onchange: e => mutate(() => { f.type = e.target.value; if (f.type === 'select' && !f.options) f.options = ['Option A']; }) }, ['text', 'number', 'toggle', 'select'].map(t => h('option', { value: t }, t)))),
+        f.type === 'select' && h('label', null, 'Options (comma separated)', h('input', { value: (f.options || []).join(', '), onchange: e => mutate(() => { f.options = e.target.value.split(',').map(s => s.trim()).filter(Boolean); }) })),
+        h('label', null, 'Pre-fill from (profile API key)', h('select', { value: f.prefill || '', onchange: e => mutate(() => { f.prefill = e.target.value || undefined; }) }, h('option', { value: '' }, '— none —'), PREFILL_KEYS.map(k => h('option', { value: k }, k)))),
+        h('label', { class: 'inline' }, h('input', { type: 'checkbox', checked: !!f.required, onchange: e => mutate(() => { f.required = e.target.checked; }) }), 'Required'),
+        h('label', null, 'Prefix / suffix', h('div', { style: 'display:flex;gap:6px' },
+          h('input', { placeholder: 'prefix', value: f.prefix || '', onchange: e => mutate(() => { f.prefix = e.target.value || undefined; }) }),
+          h('input', { placeholder: 'suffix', value: f.suffix || '', onchange: e => mutate(() => { f.suffix = e.target.value || undefined; }) }))),
+        h('label', null, 'Help text', h('input', { value: f.help || '', onchange: e => mutate(() => { f.help = e.target.value || undefined; }) })),
+        h('div', null, h('div', { style: 'font-size:13px;font-weight:600;color:var(--muted);margin-bottom:4px' }, 'Show only if'),
+          f.showIf ? condRow(f.showIf, allIds.filter(x => x !== S.selField), () => mutate(() => { delete f.showIf; }))
+                   : h('button', { class: 'btn small ghost', onclick: () => mutate(() => { f.showIf = { field: allIds[0], op: '==', value: true }; }) }, '+ Add condition')),
+        h('button', { class: 'btn small ghost', style: 'color:#b3261e', onclick: () => {
+          const used = config.rules.some(r => r.when.some(c => c.field === S.selField));
+          if (!confirm(used ? 'This field is used by a recommendation rule. Remove it anyway?' : 'Remove this field?')) return;
+          mutate(c => { c.sections.forEach(s => s.fields = s.fields.filter(x => x !== S.selField)); delete c.fields[S.selField]; S.selField = null; }); } }, 'Remove field'))));
+}
+function condRow(c, fieldIds, onRemove) {
+  return h('div', { class: 'cond' },
+    h('select', { 'aria-label': 'Field', value: c.field, onchange: e => mutate(() => { c.field = e.target.value; }) }, [...fieldIds, 'family_count', 'vehicle_count'].map(id => h('option', { value: id }, (config.fields[id] && config.fields[id].label) || id))),
+    h('select', { 'aria-label': 'Operator', value: c.op, onchange: e => mutate(() => { c.op = e.target.value; }) }, OPS.map(o => h('option', { value: o }, o))),
+    h('input', { 'aria-label': 'Value', value: String(c.value), onchange: e => mutate(() => { c.value = coerce(e.target.value); }) }),
+    h('button', { class: 'iconbtn', 'aria-label': 'Remove condition', onclick: onRemove }, '✕'));
+}
+
+function rulesTab() {
+  const ctx = S.profileStatus === 'ready' ? context() : null, fieldIds = Object.keys(config.fields);
+  return h('div', { class: 'cols two' },
+    h('div', null,
+      h('p', { class: 'note', style: 'margin-top:0' }, 'Rules are evaluated top to bottom; the first matching rule decides a product\'s tag and "why recommended" text. Drag to change priority. Use {field_id}, {family_count} or {vehicle_count} in text.'),
+      dropList('rules', (p, idx) => mutate(c => moveIn(c.rules, c.rules.findIndex(r => r.id === p.id), idx)), p => p.kind === 'rule',
+        config.rules.map((r, i) => {
+          const matched = ctx && r.enabled && (() => { const res = r.when.map(c => test(c, ctx)); return !r.when.length || (r.match === 'any' ? res.some(Boolean) : res.every(Boolean)); })();
+          return h('div', { class: 'item rule' + (matched ? ' match' : ''), style: 'display:block;cursor:default' },
+            h('div', { style: 'display:flex;gap:8px;align-items:center;margin-bottom:8px' }, h('span', draggable({ kind: 'rule', id: r.id }, { class: 'grip', title: 'Drag to change priority' }), '⋮⋮'),
+              h('input', { class: 'input', style: 'font-weight:700;flex:1', value: r.name, 'aria-label': 'Rule name', onchange: e => mutate(() => { r.name = e.target.value; }) }),
+              ctx && h('span', { class: matched ? 'badge' : 'badge amber' }, matched ? 'Matches sample profile' : 'No match'),
+              h('label', { class: 'switch' }, h('input', { type: 'checkbox', checked: r.enabled, 'aria-label': 'Enable rule', onchange: e => mutate(() => { r.enabled = e.target.checked; }) })),
+              upDown(config.rules, i),
+              h('button', { class: 'iconbtn', 'aria-label': 'Delete rule', onclick: () => confirm('Delete rule?') && mutate(c => c.rules.splice(i, 1)) }, '✕')),
+            h('div', { class: 'form-grid', style: 'grid-template-columns:1fr 1fr 1fr' },
+              h('label', null, 'When', h('select', { value: r.match, onchange: e => mutate(() => { r.match = e.target.value; }) }, h('option', { value: 'all' }, 'ALL conditions match'), h('option', { value: 'any' }, 'ANY condition matches'))),
+              h('label', null, 'Then recommend', h('select', { value: r.product, onchange: e => mutate(() => { r.product = e.target.value; }) }, config.catalogue.map(p => h('option', { value: p.id }, p.name)))),
+              h('label', null, 'Tag as', h('select', { value: r.tag, onchange: e => mutate(() => { r.tag = e.target.value; }) }, Object.keys(config.tags).map(t => h('option', { value: t }, t))))),
+            h('div', { style: 'margin:8px 0' }, r.when.map((c, ci) => condRow(c, fieldIds, () => mutate(() => r.when.splice(ci, 1)))),
+              h('button', { class: 'btn small ghost', onclick: () => mutate(() => r.when.push({ field: fieldIds[0], op: '==', value: true })) }, '+ Condition')),
+            h('div', { class: 'form-grid' },
+              h('label', null, 'Card headline', h('input', { value: r.headline, onchange: e => mutate(() => { r.headline = e.target.value; }) })),
+              h('label', null, '"Why recommended" points (one per line)', h('textarea', { rows: 3, onchange: e => mutate(() => { r.reasons = e.target.value.split('\n').map(s => s.trim()).filter(Boolean); }) }, r.reasons.join('\n')))));
+        })),
+      h('button', { class: 'btn small ghost', onclick: () => mutate(c => c.rules.push({ id: 'r_' + Math.random().toString(36).slice(2, 6), name: 'New rule', enabled: true, match: 'all', when: [], product: c.catalogue[0].id, tag: 'Relevant', headline: 'Why this is relevant', reasons: [] })) }, '+ Add rule')),
+    h('div', { class: 'panel' }, h('h3', null, 'Tags'),
+      Object.entries(config.tags).map(([t, v]) => h('div', { class: 'item', style: 'cursor:default' }, h('span', { class: 'tag ' + v.tone }, t), h('div', { class: 'grow' }),
+        h('label', { class: 'inline', style: 'font-size:13px;display:flex;gap:6px;align-items:center' }, h('input', { type: 'checkbox', checked: v.preselect, onchange: e => mutate(() => { v.preselect = e.target.checked; }) }), 'Pre-selected'))),
+      h('label', { class: 'switch', style: 'margin-top:10px' }, h('input', { type: 'checkbox', checked: config.showUnmatched, onchange: e => mutate(c => { c.showUnmatched = e.target.checked; }) }), h('span', null, 'Show products no rule matched (as Optional)')),
+      h('h3', { style: 'margin-top:16px' }, 'Test profile'),
+      ctx ? h('pre', null, JSON.stringify(Object.fromEntries(Object.entries(ctx).filter(([k]) => k in config.fields || k.endsWith('_count'))), null, 2))
+          : h('div', null, h('p', { class: 'note' }, 'Load the sample profile to see which rules match.'), h('button', { class: 'btn small ghost', onclick: async () => { await loadProfile(); render(); } }, 'Load sample profile'))));
+}
+
+function catalogueTab() {
+  const csv = a => (a || []).join(', '), parse = s => s.split(',').map(x => coerce(x.trim())).filter(x => x !== '');
+  return h('div', null, h('p', { class: 'note', style: 'margin-top:0' }, '"Code" values are what the backend sends to the rating/policy systems — IT maps them to real product/cover codes. GST % is configuration: verify the current rate for each product with Finance/Tax before go-live.'),
+    config.catalogue.map(p => h('div', { class: 'panel', style: 'margin-bottom:14px' },
+      h('div', { style: 'display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px' },
+        h('label', { class: 'switch' }, h('input', { type: 'checkbox', checked: p.enabled, 'aria-label': 'Enable ' + p.name, onchange: e => mutate(() => { p.enabled = e.target.checked; }) })),
+        h('input', { class: 'input', style: 'max-width:200px;font-weight:700', value: p.name, 'aria-label': 'Product name', onchange: e => mutate(() => { p.name = e.target.value; }) }),
+        h('label', { class: 'note' }, 'Code ', h('input', { class: 'input', style: 'width:120px', value: p.code, onchange: e => mutate(() => { p.code = e.target.value; }) })),
+        h('label', { class: 'note' }, 'GST % ', h('input', { class: 'input', type: 'number', style: 'width:80px', value: p.gstPct, onchange: e => mutate(() => { p.gstPct = +e.target.value; }) }))),
+      h('div', { class: 'scroll-x' }, h('table', { class: 'prodtable' },
+        h('thead', null, h('tr', null, ['Cover', 'Code', 'Optional', 'Included by default', 'Amount label', 'Amount options', 'Default', 'Option label', 'Options', 'Default', ''].map(t => h('th', null, t)))),
+        h('tbody', null, p.components.map((c, ci) => h('tr', null,
+          h('td', null, h('input', { value: c.name, onchange: e => mutate(() => { c.name = e.target.value; }) })),
+          h('td', null, h('input', { value: c.code, onchange: e => mutate(() => { c.code = e.target.value; }) })),
+          h('td', null, h('input', { type: 'checkbox', checked: c.optional, onchange: e => mutate(() => { c.optional = e.target.checked; }) })),
+          h('td', null, h('input', { type: 'checkbox', checked: c.included, onchange: e => mutate(() => { c.included = e.target.checked; }) })),
+          h('td', null, h('input', { value: c.si ? c.si.label : '', placeholder: '—', onchange: e => mutate(() => { if (!e.target.value) delete c.si; else (c.si = c.si || { unit: '', options: [], default: null }).label = e.target.value; }) })),
+          h('td', null, c.si && h('input', { value: csv(c.si.options), onchange: e => mutate(() => { c.si.options = parse(e.target.value); if (!c.si.options.includes(c.si.default)) c.si.default = c.si.options[0]; }) })),
+          h('td', null, c.si && h('select', { value: String(c.si.default), onchange: e => mutate(() => { c.si.default = coerce(e.target.value); }) }, c.si.options.map(o => h('option', { value: String(o) }, o)))),
+          h('td', null, h('input', { value: c.opt ? c.opt.label : '', placeholder: '—', onchange: e => mutate(() => { if (!e.target.value) delete c.opt; else (c.opt = c.opt || { options: [], default: null }).label = e.target.value; }) })),
+          h('td', null, c.opt && h('input', { value: csv(c.opt.options), onchange: e => mutate(() => { c.opt.options = e.target.value.split(',').map(s => s.trim()).filter(Boolean); if (!c.opt.options.includes(c.opt.default)) c.opt.default = c.opt.options[0]; }) })),
+          h('td', null, c.opt && h('select', { value: c.opt.default, onchange: e => mutate(() => { c.opt.default = e.target.value; }) }, c.opt.options.map(o => h('option', { value: o }, o)))),
+          h('td', null, h('button', { class: 'iconbtn', 'aria-label': 'Remove cover', onclick: () => confirm('Remove cover?') && mutate(() => p.components.splice(ci, 1)) }, '✕'))))))),
+      h('button', { class: 'btn small ghost', style: 'margin-top:8px', onclick: () => mutate(() => p.components.push({ id: 'c_' + Math.random().toString(36).slice(2, 6), code: 'NEW-COVER', name: 'New cover', optional: true, included: false, rate: 'pa', si: { label: 'Sum insured', unit: 'lakh', options: [5, 10], default: 5 } })) }, '+ Add cover'))),
+    h('p', { class: 'note' }, 'Product-level fields (members, travellers, vehicles) and the mock rating formula per cover are fixed in this mockup; in production the SOAP rating service owns pricing.'));
+}
+
+function layoutTab() {
+  const st = config.steps.find(s => s.id === S.layoutStep) || config.steps[0], blk = st.blocks.find(b => b.id === S.selBlock);
+  const onDrop = (p, idx) => mutate(() => {
+    if (p.kind === 'newBlock') { const b = { id: 'b_' + Math.random().toString(36).slice(2, 7), type: p.type, ...clone(BLOCKS[p.type].defaults || {}) }; st.blocks.splice(idx, 0, b); S.selBlock = b.id; }
+    else moveIn(st.blocks, st.blocks.findIndex(b => b.id === p.id), idx);
+  });
+  const savedStep = S.stepId; S.stepId = st.id;   // render preview as this step
+  let preview; try { preview = h('div', { class: 'scale' }, st.blocks.map(renderBlock)); } catch (e) { preview = h('div', { class: 'warn' }, 'Preview error: ' + e.message); }
+  S.stepId = savedStep;
+  return h('div', { class: 'cols', style: 'grid-template-columns:220px 1fr 1fr' },
+    h('div', { class: 'panel' }, h('h3', null, 'Components'), h('p', { class: 'note', style: 'margin-top:0' }, 'Drag onto the screen.'),
+      Object.entries(BLOCKS).map(([t, d]) => h('div', draggable({ kind: 'newBlock', type: t }, { class: 'palette-item' }), '+ ' + d.label))),
+    h('div', { class: 'panel' },
+      h('div', { style: 'display:flex;gap:8px;align-items:center;margin-bottom:10px' }, h('h3', { style: 'margin:0' }, 'Screen'),
+        h('select', { class: 'input', style: 'max-width:260px', value: st.id, onchange: e => { S.layoutStep = e.target.value; S.selBlock = null; render(); } }, config.steps.map(s => h('option', { value: s.id }, s.title)))),
+      dropList('blocks', onDrop, p => p.kind === 'block' || p.kind === 'newBlock',
+        st.blocks.map((b, i) => h('div', draggable({ kind: 'block', id: b.id }, { class: 'item' + (b.id === S.selBlock ? ' selected' : ''), onclick: () => { S.selBlock = b.id; render(); } }),
+          h('span', { class: 'grip' }, '⋮⋮'), h('div', { class: 'grow' }, h('strong', null, (BLOCKS[b.type] || {}).label || b.type), h('div', { class: 'sub' }, b.text || b.label || (b.items ? b.items.length + ' items' : ''))),
+          upDown(st.blocks, i), h('button', { class: 'iconbtn', 'aria-label': 'Remove block', onclick: e => { e.stopPropagation(); mutate(() => st.blocks.splice(i, 1)); } }, '✕')))),
+      blk && h('div', { class: 'form-grid', style: 'margin-top:12px;border-top:1px solid var(--line);padding-top:12px' }, h('strong', null, 'Block properties'),
+        (BLOCKS[blk.type] || { props: [] }).props.length ? (BLOCKS[blk.type].props).map(pr =>
+          pr === 'items' ? h('label', null, 'Items (one per line)', h('textarea', { rows: 4, onchange: e => mutate(() => { blk.items = e.target.value.split('\n').map(s => s.trim()).filter(Boolean); }) }, (blk.items || []).join('\n')))
+          : pr === 'action' ? h('label', null, 'Action', h('select', { value: blk.action, onchange: e => mutate(() => { blk.action = e.target.value; }) }, [['next', 'Go to next step'], ['prev', 'Go to previous step'], ['pay', 'Pay (KYC → payment → issue)']].map(([v, l]) => h('option', { value: v }, l))))
+          : h('label', null, pr[0].toUpperCase() + pr.slice(1), h('input', { value: blk[pr] || '', onchange: e => mutate(() => { blk[pr] = e.target.value; }) })))
+          : h('p', { class: 'note' }, 'This component is data-driven; it has no editable text. Its content comes from the profile, rules and catalogue.'))),
+    h('div', null, h('h3', { style: 'font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px' }, 'Live preview'), h('div', { class: 'preview' }, preview)));
+}
+
+function jsonTab() {
+  const text = S.jsonDraft ?? JSON.stringify(config, null, 2);
+  return h('div', null,
+    h('p', { class: 'note', style: 'margin-top:0' }, 'This is the complete journey definition. In production it is versioned in the database and served by GET /api/v1/journey-config; publishing a new version changes the live journey without a release.'),
+    S.jsonErr && h('div', { class: 'warn' }, S.jsonErr),
+    h('textarea', { class: 'json', spellcheck: 'false', 'aria-label': 'Journey config JSON', oninput: e => { S.jsonDraft = e.target.value; } }, text),
+    h('div', { class: 'cta-row', style: 'margin-top:10px' },
+      h('button', { class: 'btn ghost small', onclick: () => { S.jsonDraft = null; S.jsonErr = ''; render(); } }, 'Discard edits'),
+      h('button', { class: 'btn small', onclick: () => { try { const c = JSON.parse(S.jsonDraft ?? text); if (!c.steps || !c.fields || !c.catalogue || !c.rules) throw new Error('Missing steps/fields/catalogue/rules'); config = c; S.jsonDraft = null; S.jsonErr = ''; saveConfig(); render(); } catch (e) { S.jsonErr = 'Invalid config: ' + e.message; render(); } } }, 'Apply JSON')));
+}
+function exportConfig() {
+  const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' }), a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'journey-config.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function importConfig() {
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'application/json';
+  inp.onchange = async () => { try { const c = JSON.parse(await inp.files[0].text()); if (!c.steps || !c.rules) throw new Error('not a journey config'); config = c; saveConfig(); render(); } catch (e) { alert('Import failed: ' + e.message); } };
+  inp.click();
+}
+function builderView() {
+  const tabs = [['steps', 'Journey steps'], ['profile', 'Profile questions'], ['rules', 'Recommendation rules'], ['catalogue', 'Product catalogue'], ['layout', 'Screen layout'], ['json', 'Config JSON']];
+  const body = { steps: stepsTab, profile: profileTab, rules: rulesTab, catalogue: catalogueTab, layout: layoutTab, json: jsonTab }[S.bTab]();
+  return h('div', { class: 'bld' },
+    h('div', { class: 'bld-head' }, h('h1', null, 'Workflow builder'), S.saved && h('span', { class: 'note' }, S.saved),
+      h('button', { class: 'btn small ghost', onclick: importConfig }, 'Import JSON'), h('button', { class: 'btn small ghost', onclick: exportConfig }, 'Export JSON'),
+      h('button', { class: 'btn small ghost', onclick: () => { if (confirm('Reset the journey to the deck default? Your changes will be lost.')) { config = clone(DEFAULT_CONFIG); S.selField = S.selBlock = null; S.layoutStep = 'profile'; saveConfig(); render(); } } }, 'Reset to default'),
+      h('button', { class: 'btn small', onclick: () => { S.mode = 'journey'; render(); } }, 'Preview journey →')),
+    h('div', { class: 'bld-tabs', role: 'tablist' }, tabs.map(([k, l]) => h('button', { role: 'tab', 'aria-selected': String(S.bTab === k), onclick: () => { S.bTab = k; S.jsonDraft = null; render(); } }, l))),
+    body);
+}
+
+/* ---------------------------------------------------- Integration console */
+function consoleView() {
+  return h('div', { class: 'ic' },
+    h('div', null, h('h2', { style: 'margin-bottom:6px' }, 'Integration points'),
+      h('p', { class: 'note', style: 'margin-top:0' }, 'Each card is one backend endpoint the Spring Boot service exposes to this UI. In the mockup they are answered by mock adapters. IT replaces each mock with the real system call — the screens do not change. See docs/INTEGRATION.md.'),
+      Object.entries(Adapters).map(([k, a]) => h('div', { class: 'adapter' },
+        h('div', { class: 'hdr' }, h('strong', null, a.title), h('span', { class: 'mockflag' }, 'MOCK'), h('span', { class: 'method' }, a.method), h('code', null, a.path)),
+        h('div', { class: 'note', style: 'margin-top:6px' }, h('strong', null, 'Upstream: '), a.source), h('div', { class: 'note', style: 'margin-top:4px' }, a.notes)))),
+    h('div', null, h('div', { style: 'display:flex;align-items:center;gap:10px;margin-bottom:6px' }, h('h2', null, 'Live call log'), h('button', { class: 'btn small ghost', style: 'margin-left:auto', onclick: () => { S.log = []; render(); } }, 'Clear')),
+      !S.log.length ? h('p', { class: 'note' }, 'No calls yet. Walk through the customer journey — profile load, every premium recalculation, KYC, payment and policy issuance appear here with request and response payloads.')
+      : S.log.map(l => h('details', { class: 'log' },
+          h('summary', null, h('span', { class: 'method' }, l.method), h('code', null, l.path), h('span', { class: 'muted' }, l.title), h('span', { style: 'margin-left:auto' }, l.err ? h('span', { class: 'bad' }, 'ERROR') : l.res ? h('span', { class: 'ok' }, 'OK') : h('span', { class: 'spinner' })), h('span', { class: 'note' }, `${l.ms} ms · ${l.at}`)),
+          h('div', { class: 'note', style: 'margin-top:8px' }, 'Request (UI → backend JSON)'), h('pre', null, JSON.stringify(l.req, null, 2)),
+          h('div', { class: 'note', style: 'margin-top:8px' }, 'Response (backend → UI JSON)'), h('pre', null, l.err || JSON.stringify(l.res, null, 2)),
+          l.soap && [h('div', { class: 'note', style: 'margin-top:8px' }, 'Backend → SOAP rating service (ILLUSTRATIVE envelope — real one from WSDL)'), h('pre', null, l.soap.request),
+                     l.soap.response && [h('div', { class: 'note', style: 'margin-top:8px' }, 'SOAP response (illustrative)'), h('pre', null, l.soap.response)]]))));
+}
+
+/* ----------------------------------------------------------------- Shell */
+function render() {
+  const y = window.scrollY, app = document.getElementById('app');
+  const modeBtn = (m, l) => h('button', { 'aria-pressed': String(S.mode === m), onclick: () => { S.mode = m; render(); window.scrollTo(0, 0); } }, l);
+  const view = S.mode === 'builder' ? builderView() : S.mode === 'console' ? consoleView() : journeyView();
+  app.replaceChildren(
+    h('header', { class: 'topbar' }, h('span', { class: 'name' }, 'HindujaOneJourney'), h('span', { class: 'pill' }, 'MOCKUP · mock data & rates'),
+      h('div', { class: 'modes' }, modeBtn('journey', 'Customer journey'), modeBtn('builder', 'Workflow builder'), modeBtn('console', `Integration console${S.log.length ? ' (' + S.log.length + ')' : ''}`),
+        h('button', { onclick: () => { Object.assign(S, { stepId: null, section: 0, profile: {}, prefill: {}, profileStatus: 'idle', errors: {}, selection: {}, quotes: {}, quoting: {}, detail: null, kyc: {}, consents: {}, policies: [], payError: '' }); S.mode = 'journey'; goto(enabledSteps()[0] && enabledSteps()[0].id); } }, '↺ Restart journey'))),
+    view);
+  window.scrollTo(0, y);
+}
+goto(enabledSteps()[0] && enabledSteps()[0].id);
+</script>
+</body>
+</html>
