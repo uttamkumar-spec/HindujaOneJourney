@@ -5,7 +5,11 @@ import jwt
 import pytest
 
 from app import create_app
-from app.settings import BACKEND_DIR, Settings, _validate
+from app.settings import BACKEND_DIR, REPO_DIR, Settings, _validate
+
+def needs_pages(variant):
+    """Skip when this package ships only the other option's HTML pages."""
+    return pytest.mark.skipif(not (REPO_DIR / "frontend" / variant).is_dir(), reason=f"frontend/{variant} not in this package")
 
 SECRET = "x" * 40
 H = {"X-HOJ-Request": "1"}
@@ -180,6 +184,7 @@ def test_logs_are_masked(app):
 
 
 # ------------------------------------------------------ deployment shape
+@needs_pages("ad")
 def test_portal_only_instance_has_no_admin(tmp_path):
     c = make_app(tmp_path, surfaces=["portal"]).test_client()
     assert c.get("/admin").status_code == 404
@@ -188,6 +193,7 @@ def test_portal_only_instance_has_no_admin(tmp_path):
     assert c.get("/").status_code == 200
 
 
+@needs_pages("ad")
 def test_admin_only_instance_has_no_portal(tmp_path):
     c = make_app(tmp_path, surfaces=["admin"]).test_client()
     assert c.get("/").status_code == 404 and c.get("/admin").status_code == 200
@@ -221,6 +227,7 @@ def test_supabase_tokens(tmp_path):
     assert pub["supabaseUrl"] == "https://proj.supabase.co" and "supabaseJwtSecret" not in json.dumps(pub)
 
 
+@needs_pages("supabase")
 def test_supabase_serves_supabase_pages(tmp_path):
     c = supa_app(tmp_path).test_client()
     assert b"supabase-js" in c.get("/").data and b"supabase-js" in c.get("/admin").data
