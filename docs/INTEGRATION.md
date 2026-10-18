@@ -1,138 +1,94 @@
-# Integration guide — from mockup to production
+# Integration guide
 
-The mockup (`mockup/index.html`) is built so that IT only has to replace
-**adapters**. Screens never call external systems; they read one **journey
-config** and call five backend endpoints. Everything below the endpoints is
-IT's to implement in the Spring Boot service.
+The portal and admin console talk only to the Flask backend. Every upstream
+system sits behind one adapter class in `backend/app/adapters.py`; today they
+are all **mocks**. Replacing a mock with the real call changes nothing in the
+routes or screens.
 
 ```
-Browser (journey UI + workflow builder)
-   │  JSON over HTTPS
-   ▼
-Spring Boot backend  ── /api/v1/journey-config   (config store, versioned)
-   │                 ── /api/v1/profile/me       → HRMS / GMC system
-   │                 ── /api/v1/quotes           → Rating service (SOAP)
-   │                 ── /api/v1/kyc/verify       → KYC service
-   │                 ── /api/v1/payments         → Payment gateway
-   │                 ── /api/v1/policies         → Policy admin system
+Browser ── portal  (/)       ─┐
+Browser ── admin   (/admin)  ─┤  JSON over HTTPS
+                              ▼
+                   Flask backend (backend/app)
+                   ├─ engine.py    rules, selection checks, config validation
+                   ├─ store.py     config versions, leads, quotes, policies
+                   ├─ auth.py      Supabase JWT  |  AD (LDAPS)  |  dev
+                   └─ adapters.py  ─► HR/GMC profile   (MockProfileSource)
+                                   ─► Rating (SOAP)    (MockRatingService)
+                                   ─► KYC              (MockKyc)
+                                   ─► Payment gateway  (MockPayments)
+                                   ─► Policy admin     (MockPolicyAdmin)
 ```
 
-> All endpoint paths and payloads below are a **proposal** derived from the
-> mockup, not an existing API. Field names on the upstream side (HRMS, SOAP
-> WSDL, gateway) must come from those systems' real specs.
+## Adapters to replace
 
-## 1. Journey config — `GET /api/v1/journey-config`
+| Adapter | Method | Must return | Notes |
+|---|---|---|---|
+| `MockProfileSource` | `get(user)` | flat dict of prefill keys → values | Keys used by the default journey: see `SAMPLE` in the class. A journey field's `prefill` names one of these keys, so a new HR attribute = return a new key + map a field to it in the admin console. |
+| `MockRatingService` | `quote(req)` | `{"lines":[{"code","name","premium"}], "premium": int}` | `req` = `productCode`, `proposer`, `members`, `travellers`, `vehicles`, `covers[{code, sumInsured, option}]`. Build the SOAP call from it — e.g. with the `zeep` library from the WSDL — map cover `code`s (editable in **Product catalogue**) to the service's codes, add WS-Security. GST is added by the backend from the catalogue's `gstPct`. |
+| `MockKyc` | `verify(req)` | `{"status": "VERIFIED", ...}` | Called once per checkout before payment. |
+| `MockPayments` | `charge(req)` | `{"status": "SUCCESS", "txnId": ...}` | The amount is recomputed server-side from stored quotes. A real gateway needs redirect + callback; see "Payment" below. |
+| `MockPolicyAdmin` | `issue(req)` | `{"status": "Issued" \| "Processing", "policyNo": ...}` | One call per product. |
 
-The whole journey (steps, screen layouts, profile questions, rules, product
-catalogue) is one JSON document. Its shape is exactly `DEFAULT_CONFIG` in
-`mockup/index.html`; "Export JSON" in the builder downloads it.
+Plug a real class in through `Adapters(profile=..., rating=..., ...)` in
+`create_app` (or `build` it from settings). Every call is recorded in the
+in-memory call log shown in **Admin → Integration log**, with PAN, mobile and
+e-mail masked.
 
-Production needs:
-- `GET /api/v1/journey-config` — returns the **published** version.
-- `PUT /api/v1/admin/journey-config/draft` + `POST …/publish` — builder saves a
-  draft; a second person publishes (maker-checker, if the business wants it).
-- Store every version (who, when) so a bad change can be rolled back.
-- The builder must sit behind admin login; customers only get the GET.
+The SOAP envelope shown in the log is **illustrative** (placeholder namespace
+`urn:PLACEHOLDER:rating`) until the real WSDL is available.
 
-Replace in mockup: `loadConfig()` / `saveConfig()`.
+## API (what the browser calls)
 
-## 2. Employee profile — `GET /api/v1/profile/me`
+Portal (`/api`, signed-in employee):
 
-Response: `{ employeeId, values: { "<key>": value, … } }` — flat keys.
-Each profile field in the config has a `prefill` key (e.g.
-`gmc.sumInsuredLakh`) that is looked up in `values`. Adding a new pre-filled
-attribute = backend returns a new key + builder maps a field to it. No UI code.
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/public-config` | Auth mode + Supabase URL/anon key (no sign-in needed) |
+| POST | `/api/auth/login`, `/api/auth/logout` | AD / dev sign-in (Supabase signs in from the browser) |
+| GET | `/api/me` | Current user |
+| GET | `/api/journey-config` | Published journey **without the rules** |
+| GET | `/api/profile/me` | Pre-filled values (profile adapter) |
+| POST | `/api/recommendations` | `{profile}` → cards; stores a lead; server checks required fields |
+| POST | `/api/quotes` | `{productId, selection}` → premium; selection validated against the catalogue |
+| POST | `/api/checkout` | `{quoteIds, consents, kyc}` → KYC → payment → issuance; each quote usable once |
+| GET | `/api/policies/me` | Employee's policies |
 
-Keys the mockup uses: see `PREFILL_KEYS` in `mockup/index.html`.
+Admin (`/admin/api`, signed-in admin):
 
-Upstream source: **to be confirmed** (HRMS API / GMC policy system / file).
-Identity comes from the login session — never from a query parameter.
+| Method | Path | Purpose |
+|---|---|---|
+| POST | `/admin/api/auth/login`, `/logout` | AD / dev admin sign-in |
+| GET | `/admin/api/me` | Current admin |
+| GET | `/admin/api/config` | Draft + live version info |
+| PUT / DELETE | `/admin/api/config/draft` | Save (returns validation errors) / discard draft |
+| POST | `/admin/api/config/publish` | Validate + publish draft as a new version (409 if someone published meanwhile) |
+| GET | `/admin/api/config/versions[/<v>]` | History / one version |
+| POST | `/admin/api/config/rollback` | Re-publish an older version |
+| GET | `/admin/api/sample-profile` | Sample data for previews |
+| POST | `/admin/api/preview/recommendations`, `/preview/quote` | Run the draft without publishing |
+| GET | `/admin/api/activity`, `/admin/api/logs` | Recent leads/policies; integration call log |
 
-Replace in mockup: `Adapters.profile.call`.
+All state-changing requests must carry the header `X-HOJ-Request: 1` (CSRF
+protection for the cookie-based AD sessions).
 
-## 3. Rating — `POST /api/v1/quotes` (SOAP behind it)
+## Payment (production)
 
-Called once per selected product, and again whenever the customer changes
-members, sum insured, options or add-ons on the Customise screen.
-
-Request (UI → backend):
-```json
-{
-  "productCode": "HEALTH",
-  "proposer": { "name": "…", "age": 37, "pincode": "400001" },
-  "members":  [ { "relation": "Self", "age": 37 }, { "relation": "Spouse", "age": 35 } ],
-  "travellers": 3,
-  "vehicles": [ { "type": "2W", "reg": "MH 01 AB 1234" } ],
-  "covers": [ { "code": "HLT-RETAIL", "sumInsured": 10, "option": "Recommended plan" } ]
-}
-```
-Response (backend → UI):
-```json
-{ "quoteId": "…", "productCode": "HEALTH",
-  "lines": [ { "code": "HLT-RETAIL", "name": "Retail Health", "premium": 21375 } ],
-  "premium": 35906, "gst": 0, "total": 35906, "currency": "INR", "validTill": "YYYY-MM-DD" }
-```
-
-Backend responsibilities:
-1. Generate a SOAP client from the rating service's WSDL (common options in
-   Spring Boot: Apache CXF's `cxf-codegen-plugin`, JAX-WS `wsimport`, or Spring
-   Web Services `WebServiceTemplate` with JAXB classes — pick per your
-   standards and verify current versions).
-2. Map `productCode` / cover `code` values (editable in the builder's Product
-   catalogue tab) to the rating service's product/cover codes.
-3. Add WS-Security / certificates as the service requires. Credentials live in
-   the backend's secret store, never in the UI or the config JSON.
-4. **Tax is computed by the backend/rating service, not the UI.** The
-   catalogue's `gstPct` exists only so the mockup can show a number. Verify the
-   current GST treatment for each product with Finance before go-live.
-5. Return the `quoteId`; payment and issuance must reference it so the
-   customer pays the quoted premium (re-validate server-side; never trust a
-   premium sent back from the browser).
-6. Timeouts + a clear error → the UI already shows "Rating service
-   unavailable — please retry".
-
-The SOAP envelope shown in the Integration console is **illustrative only**
-(placeholder namespace `urn:PLACEHOLDER:rating`).
-
-Replace in mockup: `Adapters.rating.call` (the `MOCK_RATES` formulas are fake
-numbers for demo only and must be deleted).
-
-## 4. KYC — `POST /api/v1/kyc/verify`
-
-Request `{ pan, mobile, email }` → `{ status: "VERIFIED" | "FAILED" | …, kycRef }`.
-Called before payment. Upstream: **to be confirmed**.
-
-## 5. Payment — `POST /api/v1/payments`
-
-Request `{ amount, currency, orderRef, products[] }` → `{ status, txnId }`.
-In production this becomes: create order → redirect/SDK to gateway → gateway
-callback to backend → backend confirms → UI polls/receives result. The amount
-must be recomputed server-side from the stored `quoteId`s.
-
-## 6. Policy issuance — `POST /api/v1/policies`
-
-One call per product (each policy is issued independently):
-`{ productCode, quoteId, paymentTxn }` → `{ policyNo | null, status: "Issued" | "Processing" }`.
-The wallet screen shows `Processing` with "Track status" for non-instant cases.
-
-## What is configurable without code (builder)
-
-| Builder tab | Controls |
-|---|---|
-| Journey steps | Order, enable/disable, titles, "Step x of y" counting (with ordering warnings) |
-| Profile questions | Sections, fields, type, pre-fill key, required, show-if conditions |
-| Recommendation rules | Conditions → product + tag + "why recommended" text, priority by drag |
-| Product catalogue | Products, covers, codes sent to rating, amount/option lists, defaults |
-| Screen layout | Which components appear on each screen, in what order, with what text |
-
-Not configurable (code): the components themselves, the adapter calls, and
-derived values (`family_count`, `vehicle_count`).
+The mock charges synchronously. A real gateway flow is: create order for the
+server-computed amount → redirect / SDK → gateway callback to a new backend
+endpoint → verify signature → issue policies → portal shows the wallet. Only
+`MockPayments` and the checkout route change; the screens already handle a
+"Processing" status.
 
 ## Open items for the business / IT
 
-- Rating service WSDL, auth method, UAT endpoint, one vs many endpoints.
-- Source of pre-filled employee data and how employees log in (SSO / OTP / portal session).
+- Rating service WSDL, auth method, UAT endpoint; one vs many endpoints.
+- Source of pre-filled employee data (HRMS API / GMC system / file).
 - KYC, payment gateway and policy admin systems to call.
-- "Needs" step: shown as a tab in the deck but its content isn't defined — not built.
-- Who may edit and who may publish journey config.
+- On-prem AD (LDAPS) vs Microsoft Entra ID (would need OIDC instead of LDAP).
+- Approval flow for publishing (today any admin can publish; maker-checker can be added).
+- "Needs" step from the deck — content not defined, not built.
 - Real GST treatment per product; real product/cover codes.
+- Earlier this guide targeted a Java / Spring Boot backend. The Flask backend
+  here is the working reference; if IT standardises on Spring Boot, the API
+  table above is the contract to keep.

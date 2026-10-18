@@ -1,32 +1,26 @@
 # HindujaOneJourney
 
-Journey for our internal customers: employees of group companies get a guided
-protection journey — **profile once → personalised recommendation → customise →
-checkout** — for Health, Travel, Motor and Home insurance.
+Guided protection journey for employees of the group: **profile once →
+personalised recommendation → customise → checkout** for Health, Travel,
+Motor and Home insurance — plus a separate, drag-and-drop **admin console**
+to change the journey without a redeploy.
 
-## Current state: clickable mockup
+```
+backend/    Flask API: rules engine, config versions, auth, integration adapters (mock)
+frontend/
+  shared/     journey screens, admin builder, styles (used by both options)
+  supabase/   Option 1 — portal.html + admin.html, Supabase sign-in
+  ad/         Option 2 — portal.html + admin.html, Active Directory sign-in via backend
+mockup/     original single-file clickable mockup (no backend; for demos only)
+docs/       SETUP.md (run + both options), INTEGRATION.md (APIs + adapters)
+```
 
-Open `mockup/index.html` in any modern browser (no install, no server, works
-offline). Three modes from the top bar:
+- Customer portal: `/` · Admin console: `/admin` (own sign-in; can be deployed
+  as a separate internal-only instance with `SERVE_SURFACES=admin`).
+- Start here: [`docs/SETUP.md`](docs/SETUP.md).
+- Integrating real systems (SOAP rating, HR data, KYC, payment, policy admin):
+  [`docs/INTEGRATION.md`](docs/INTEGRATION.md).
 
-- **Customer journey** — the full flow from the UI deck: intro, protection
-  profile (pre-filled family & assets), recommendation cards with "why
-  recommended", customise (members, sum insured, add-ons, live premium),
-  review & checkout (one or many products), KYC + consent + payment, policy
-  wallet with next-best action. Mobile-responsive.
-- **Workflow builder** — drag-and-drop editing of journey steps, profile
-  questions, recommendation rules, product catalogue and per-screen layout,
-  with live preview. Changes are saved in your browser; use Export/Import JSON
-  to share them.
-- **Integration console** — every backend call the journey makes, with
-  request/response payloads, including an illustrative SOAP envelope for the
-  rating call.
-
-**Everything is mock data.** Rates, policy numbers, KYC, payment and the sample
-employee are fake. Nothing leaves the browser.
-
-## Path to production
-
-Target stack: Java / Spring Boot backend + web front end. IT replaces the five
-mock adapters with real calls — see [`docs/INTEGRATION.md`](docs/INTEGRATION.md)
-for the endpoint contracts, the SOAP rating integration and the open items.
+All rates, policy numbers and integrations are currently **mocks**.
+Secrets live only in `backend/.env.dev` (gitignored); `backend/.env.dev.example`
+is the template.
