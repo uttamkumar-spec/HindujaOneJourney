@@ -1,0 +1,727 @@
+{
+  "version": 1,
+  "brand": {
+    "name": "IndusInd",
+    "tagline": "GENERAL INSURANCE"
+  },
+  "showUnmatched": true,
+  "tags": {
+    "Recommended": {
+      "tone": "brand",
+      "preselect": true
+    },
+    "Relevant": {
+      "tone": "blue",
+      "preselect": true
+    },
+    "Optional": {
+      "tone": "muted",
+      "preselect": false
+    }
+  },
+  "steps": [
+    {
+      "id": "intro",
+      "type": "intro",
+      "enabled": true,
+      "counted": false,
+      "title": "Guided protection journey",
+      "subtitle": "Profile first \u2022 Personalised recommendation \u2022 Customisation \u2022 Checkout",
+      "blocks": [
+        {
+          "id": "b_hero",
+          "type": "hero"
+        },
+        {
+          "id": "b_cta0",
+          "type": "cta",
+          "label": "Start my protection profile",
+          "action": "next"
+        }
+      ]
+    },
+    {
+      "id": "profile",
+      "type": "profile",
+      "enabled": true,
+      "counted": true,
+      "title": "My Protection Profile",
+      "subtitle": "Tell us about your family and assets",
+      "blocks": [
+        {
+          "id": "b_h1",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_bn1",
+          "type": "banner",
+          "text": "Confirm the pre-filled details and add anything missing. Employer-sourced fields can be edited."
+        },
+        {
+          "id": "b_pf",
+          "type": "profileForm"
+        },
+        {
+          "id": "b_cta1",
+          "type": "cta",
+          "label": "Show my recommendations",
+          "action": "next"
+        }
+      ]
+    },
+    {
+      "id": "recommend",
+      "type": "recommend",
+      "enabled": true,
+      "counted": true,
+      "title": "Recommended for your profile",
+      "subtitle": "Recommendations use your confirmed profile. Every card explains why and remains editable.",
+      "blocks": [
+        {
+          "id": "b_h2",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_rc",
+          "type": "recommendationCards"
+        },
+        {
+          "id": "b_n2",
+          "type": "note",
+          "text": "Recommendation does not remove your choice \u2014 select or deselect any product."
+        },
+        {
+          "id": "b_cta2",
+          "type": "cta",
+          "label": "Customise selected plans",
+          "action": "next"
+        }
+      ]
+    },
+    {
+      "id": "customise",
+      "type": "customise",
+      "enabled": true,
+      "counted": true,
+      "title": "Customise suggested plans",
+      "subtitle": "The recommendation is pre-filled. Change limits, members, add-ons or remove a product.",
+      "blocks": [
+        {
+          "id": "b_h3",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_cp",
+          "type": "customisePanel"
+        },
+        {
+          "id": "b_n3",
+          "type": "note",
+          "text": "Changes recalculate through approved product and rating systems."
+        },
+        {
+          "id": "b_cta3",
+          "type": "cta",
+          "label": "Review selected plans",
+          "action": "next"
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "type": "review",
+      "enabled": true,
+      "counted": true,
+      "title": "Review & Checkout",
+      "subtitle": "Buy one product or several. No recommendation is forced.",
+      "blocks": [
+        {
+          "id": "b_h4",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_rv",
+          "type": "reviewList"
+        },
+        {
+          "id": "b_ps",
+          "type": "paymentSummary"
+        },
+        {
+          "id": "b_cta4",
+          "type": "cta",
+          "label": "Proceed to KYC",
+          "action": "next"
+        }
+      ]
+    },
+    {
+      "id": "checkout",
+      "type": "checkout",
+      "enabled": true,
+      "counted": false,
+      "chip": "Final step",
+      "title": "Secure Checkout",
+      "subtitle": "Confirm your details and consents.",
+      "blocks": [
+        {
+          "id": "b_h5",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_kyc",
+          "type": "kycForm"
+        },
+        {
+          "id": "b_cs",
+          "type": "consents",
+          "items": [
+            "I confirm the proposal details",
+            "I consent to product-specific declarations and communication",
+            "I understand that each policy is independently issued"
+          ]
+        },
+        {
+          "id": "b_ps2",
+          "type": "paymentSummary"
+        },
+        {
+          "id": "b_cta5",
+          "type": "cta",
+          "label": "Pay securely",
+          "action": "pay"
+        }
+      ]
+    },
+    {
+      "id": "done",
+      "type": "done",
+      "enabled": true,
+      "counted": false,
+      "chip": "Complete",
+      "title": "Payment successful",
+      "subtitle": "Selected policies and documents are available in one place.",
+      "blocks": [
+        {
+          "id": "b_h6",
+          "type": "stepHeader"
+        },
+        {
+          "id": "b_w",
+          "type": "wallet"
+        },
+        {
+          "id": "b_nba",
+          "type": "nextBestAction"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "family",
+      "title": "Family",
+      "fields": [
+        "emp_name",
+        "emp_age",
+        "has_spouse",
+        "spouse_age",
+        "children_count",
+        "child_ages",
+        "has_parents",
+        "parent_ages",
+        "gmc_sum",
+        "gmc_members",
+        "personal_cover",
+        "pincode"
+      ]
+    },
+    {
+      "id": "assets",
+      "title": "Assets",
+      "fields": [
+        "own_2w",
+        "reg_2w",
+        "own_4w",
+        "reg_4w",
+        "intl_travel",
+        "trips_per_year",
+        "own_home",
+        "property_pincode"
+      ]
+    }
+  ],
+  "fields": {
+    "emp_name": {
+      "label": "Employee name",
+      "type": "text",
+      "prefill": "employee.name",
+      "required": true
+    },
+    "emp_age": {
+      "label": "Your age",
+      "type": "number",
+      "suffix": "years",
+      "prefill": "employee.age",
+      "required": true
+    },
+    "has_spouse": {
+      "label": "Spouse",
+      "type": "toggle",
+      "prefill": "spouse.covered"
+    },
+    "spouse_age": {
+      "label": "Spouse age",
+      "type": "number",
+      "suffix": "years",
+      "prefill": "spouse.age",
+      "showIf": {
+        "field": "has_spouse",
+        "op": "==",
+        "value": true
+      }
+    },
+    "children_count": {
+      "label": "Number of children",
+      "type": "number",
+      "prefill": "children.count"
+    },
+    "child_ages": {
+      "label": "Children ages",
+      "type": "text",
+      "prefill": "children.ages",
+      "help": "Comma separated, e.g. 8, 5",
+      "showIf": {
+        "field": "children_count",
+        "op": ">",
+        "value": 0
+      }
+    },
+    "has_parents": {
+      "label": "Parents",
+      "type": "toggle",
+      "prefill": "parents.covered"
+    },
+    "parent_ages": {
+      "label": "Parent ages",
+      "type": "text",
+      "help": "Comma separated",
+      "showIf": {
+        "field": "has_parents",
+        "op": "==",
+        "value": true
+      }
+    },
+    "gmc_sum": {
+      "label": "Corporate GMC cover",
+      "type": "number",
+      "prefix": "\u20b9",
+      "suffix": "lakh",
+      "prefill": "gmc.sumInsuredLakh"
+    },
+    "gmc_members": {
+      "label": "GMC members",
+      "type": "text",
+      "prefill": "gmc.members"
+    },
+    "personal_cover": {
+      "label": "Personal health cover",
+      "type": "select",
+      "options": [
+        "None declared",
+        "Yes, I have one"
+      ],
+      "prefill": "personalHealth.status"
+    },
+    "pincode": {
+      "label": "Residential pincode",
+      "type": "text",
+      "prefill": "address.pincode",
+      "required": true
+    },
+    "own_2w": {
+      "label": "Own a 2-Wheeler",
+      "type": "toggle",
+      "prefill": "vehicles.twoWheeler.owned"
+    },
+    "reg_2w": {
+      "label": "2-Wheeler registration number",
+      "type": "text",
+      "prefill": "vehicles.twoWheeler.reg",
+      "showIf": {
+        "field": "own_2w",
+        "op": "==",
+        "value": true
+      }
+    },
+    "own_4w": {
+      "label": "Own a 4-Wheeler",
+      "type": "toggle",
+      "prefill": "vehicles.fourWheeler.owned"
+    },
+    "reg_4w": {
+      "label": "4-Wheeler registration number",
+      "type": "text",
+      "prefill": "vehicles.fourWheeler.reg",
+      "showIf": {
+        "field": "own_4w",
+        "op": "==",
+        "value": true
+      }
+    },
+    "intl_travel": {
+      "label": "International travel",
+      "type": "toggle",
+      "prefill": "travel.international"
+    },
+    "trips_per_year": {
+      "label": "Typical trips per year",
+      "type": "number",
+      "prefill": "travel.tripsPerYear",
+      "showIf": {
+        "field": "intl_travel",
+        "op": "==",
+        "value": true
+      }
+    },
+    "own_home": {
+      "label": "Own a home",
+      "type": "toggle",
+      "prefill": "home.owned"
+    },
+    "property_pincode": {
+      "label": "Property pincode",
+      "type": "text",
+      "prefill": "home.pincode",
+      "showIf": {
+        "field": "own_home",
+        "op": "==",
+        "value": true
+      }
+    }
+  },
+  "catalogue": [
+    {
+      "id": "health",
+      "code": "HEALTH",
+      "name": "Health",
+      "enabled": true,
+      "gstPct": 0,
+      "usesMembers": true,
+      "components": [
+        {
+          "id": "retail",
+          "code": "HLT-RETAIL",
+          "name": "Retail Health",
+          "optional": false,
+          "included": true,
+          "rate": "health_base",
+          "si": {
+            "label": "Sum insured",
+            "unit": "lakh",
+            "options": [
+              5,
+              10,
+              15,
+              20,
+              25
+            ],
+            "default": 10
+          },
+          "opt": {
+            "label": "Plan option",
+            "options": [
+              "Recommended plan",
+              "Essential",
+              "Premier"
+            ],
+            "default": "Recommended plan"
+          }
+        },
+        {
+          "id": "topup",
+          "code": "HLT-TOPUP",
+          "name": "Super Top-up",
+          "optional": true,
+          "included": true,
+          "rate": "health_topup",
+          "si": {
+            "label": "Sum insured",
+            "unit": "lakh",
+            "options": [
+              25,
+              50,
+              100
+            ],
+            "default": 25
+          },
+          "opt": {
+            "label": "Deductible",
+            "options": [
+              "\u20b95 lakh",
+              "\u20b910 lakh"
+            ],
+            "default": "\u20b95 lakh"
+          }
+        },
+        {
+          "id": "pa",
+          "code": "PA",
+          "name": "Personal Accident",
+          "optional": true,
+          "included": true,
+          "rate": "pa",
+          "scope": "Employee only",
+          "si": {
+            "label": "Cover",
+            "unit": "lakh",
+            "options": [
+              10,
+              25,
+              50
+            ],
+            "default": 25
+          }
+        },
+        {
+          "id": "hospicash",
+          "code": "HOSPICASH",
+          "name": "HospiCash",
+          "optional": true,
+          "included": false,
+          "rate": "hospicash",
+          "si": {
+            "label": "Daily benefit",
+            "unit": "\u20b9/day",
+            "options": [
+              500,
+              1000,
+              2000
+            ],
+            "default": 1000
+          }
+        }
+      ]
+    },
+    {
+      "id": "travel",
+      "code": "TRAVEL",
+      "name": "Travel",
+      "enabled": true,
+      "gstPct": 18,
+      "components": [
+        {
+          "id": "trip",
+          "code": "TRV-OVERSEAS",
+          "name": "Overseas travel",
+          "optional": false,
+          "included": true,
+          "rate": "travel",
+          "si": {
+            "label": "Cover tier",
+            "unit": "",
+            "options": [
+              "Standard",
+              "Plus",
+              "Max"
+            ],
+            "default": "Standard"
+          },
+          "opt": {
+            "label": "Trip type",
+            "options": [
+              "Single trip",
+              "Annual multi-trip"
+            ],
+            "default": "Single trip"
+          }
+        }
+      ],
+      "usesTravellers": true
+    },
+    {
+      "id": "motor",
+      "code": "MOTOR",
+      "name": "Motor",
+      "enabled": true,
+      "gstPct": 18,
+      "components": [
+        {
+          "id": "tw",
+          "code": "MTR-2W",
+          "name": "2-Wheeler",
+          "optional": true,
+          "included": true,
+          "rate": "motor_2w",
+          "showIf": {
+            "field": "own_2w",
+            "op": "==",
+            "value": true
+          },
+          "opt": {
+            "label": "Plan",
+            "options": [
+              "Comprehensive",
+              "Third-party only"
+            ],
+            "default": "Comprehensive"
+          }
+        },
+        {
+          "id": "fw",
+          "code": "MTR-4W",
+          "name": "4-Wheeler",
+          "optional": true,
+          "included": true,
+          "rate": "motor_4w",
+          "showIf": {
+            "field": "own_4w",
+            "op": "==",
+            "value": true
+          },
+          "opt": {
+            "label": "Plan",
+            "options": [
+              "Comprehensive",
+              "Third-party only"
+            ],
+            "default": "Comprehensive"
+          }
+        }
+      ],
+      "usesVehicles": true
+    },
+    {
+      "id": "home",
+      "code": "HOME",
+      "name": "Home",
+      "enabled": true,
+      "gstPct": 18,
+      "components": [
+        {
+          "id": "building",
+          "code": "HOM-BLDG",
+          "name": "Building",
+          "optional": true,
+          "included": true,
+          "rate": "home_building",
+          "si": {
+            "label": "Sum insured",
+            "unit": "lakh",
+            "options": [
+              25,
+              50,
+              75,
+              100
+            ],
+            "default": 50
+          }
+        },
+        {
+          "id": "contents",
+          "code": "HOM-CNT",
+          "name": "Contents",
+          "optional": true,
+          "included": true,
+          "rate": "home_contents",
+          "si": {
+            "label": "Sum insured",
+            "unit": "lakh",
+            "options": [
+              5,
+              10,
+              20
+            ],
+            "default": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "r_health",
+      "name": "Health gap vs corporate GMC",
+      "enabled": true,
+      "match": "all",
+      "when": [
+        {
+          "field": "gmc_sum",
+          "op": "<",
+          "value": 10
+        }
+      ],
+      "product": "health",
+      "tag": "Recommended",
+      "headline": "Current GMC \u20b9{gmc_sum}L; family of {family_count}",
+      "reasons": [
+        "Corporate GMC: \u20b9{gmc_sum} lakh",
+        "Family members: {family_count}",
+        "Personal health cover: {personal_cover}"
+      ]
+    },
+    {
+      "id": "r_travel",
+      "name": "International traveller",
+      "enabled": true,
+      "match": "all",
+      "when": [
+        {
+          "field": "intl_travel",
+          "op": "==",
+          "value": true
+        }
+      ],
+      "product": "travel",
+      "tag": "Relevant",
+      "headline": "International travel selected",
+      "reasons": [
+        "About {trips_per_year} international trips a year",
+        "Travellers: {family_count}"
+      ]
+    },
+    {
+      "id": "r_motor",
+      "name": "Vehicle owner",
+      "enabled": true,
+      "match": "any",
+      "when": [
+        {
+          "field": "own_2w",
+          "op": "==",
+          "value": true
+        },
+        {
+          "field": "own_4w",
+          "op": "==",
+          "value": true
+        }
+      ],
+      "product": "motor",
+      "tag": "Relevant",
+      "headline": "{vehicle_count} vehicle(s) added",
+      "reasons": [
+        "Vehicles on your profile: {vehicle_count}"
+      ]
+    },
+    {
+      "id": "r_home",
+      "name": "Home owner",
+      "enabled": true,
+      "match": "all",
+      "when": [
+        {
+          "field": "own_home",
+          "op": "==",
+          "value": true
+        }
+      ],
+      "product": "home",
+      "tag": "Optional",
+      "headline": "Owned home added",
+      "reasons": [
+        "Property pincode: {property_pincode}"
+      ]
+    }
+  ]
+}
